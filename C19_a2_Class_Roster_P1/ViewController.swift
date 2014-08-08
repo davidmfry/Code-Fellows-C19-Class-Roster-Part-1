@@ -4,7 +4,7 @@
 //
 //  Created by David Fry on 8/5/14.
 //  Copyright (c) 2014 David Fry. All rights reserved.
-//
+
 
 // Canvas API to get all students in C19 https://canvas.instructure.com/api/v1/courses/868751/students
 // Canvas API to get student object https://canvas.instructure.com/api/v1/users/3987826/profile (/users/:user_id/profile)
