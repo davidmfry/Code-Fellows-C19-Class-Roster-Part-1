@@ -10,6 +10,7 @@
 import json
 
 
+
 def splitTextFile(file_name):
 	# takes in a txt file and splits the lines into strings
 	# then add them into an array and then returns the array
@@ -55,6 +56,11 @@ def createJSONfile(final_dict_array, file_name):
 	print "Finished creating your file!"
 
 my_array = []
-text_array = splitTextFile("classRoster.txt")
-class_roster = creatDictionaryArray(text_array)
-createJSONfile(class_roster, "roster2.json")
+#text_array = splitTextFile("classRoster.txt")
+my_file = open("name_with_ids.txt", 'w')
+for key in text_array:
+	#open root
+	my_file.write("id:{id} : name:{name}".format(id=key["id"], name=key["name"]))
+my_file.close()
+#class_roster = creatDictionaryArray(text_array)
+#createJSONfile(class_roster, "roster2.json")

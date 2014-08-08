@@ -10,18 +10,33 @@ import UIKit
 
 class Person: NSObject
 {
-    var firstName = ""
-    var lastName = ""
+    var studentId: String?
+    var firstName: String?
+    var lastName: String?
     var image: UIImage?
     
-    init(firstName: String, lastName: String) {
+    init(studentId:String, firstName: String, lastName: String)
+    {
+        self.studentId = studentId
         self.firstName = firstName
         self.lastName = lastName
     }
     
-    func fullName () -> String
+    func fullName (idOn: Bool) -> String
     {
-        return "\(self.firstName) \(self.lastName)"
+        if !idOn
+        {
+            return "Name: \(self.firstName!) \(self.lastName!)"
+        }
+        else
+        {
+            return "id: \(self.studentId!) Name: \(self.firstName!) \(self.lastName!)"
+        }
+    }
+    
+    func giveStudentID() -> String
+    {
+        return self.studentId!
     }
     
    

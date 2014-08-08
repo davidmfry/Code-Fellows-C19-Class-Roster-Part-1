@@ -16,47 +16,50 @@ import Foundation
 
 class ViewController: UIViewController {
     
-    var newArray = []
     var personArray = [Person]()
-    let studentPlist = NSArray(contentsOfFile: NSBundle.mainBundle().pathForResource("studentRoster", ofType: "plsit"))
+    
+    // Getting the path to the plist file. The plist contains an Array<Dictionary>
     let plistPath = NSBundle.mainBundle().pathForResource("studentRoster", ofType: "plist")
     
     
-    //let dict = NSDictionary(contentsOfFile:self.mypath)
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
+        // student roster is the plist variable wich can be opperated on.  It's an NSArray
         let studentRoster = NSArray(contentsOfFile: self.plistPath)
-        //var studentList = self.studentPlist as Array<Dictionary<String, String>>
-//      makePersonsArray()
-//        for person in self.personArray
-//        {
-//            println("\(person.fullName())")
-//        }
-        println(studentRoster[0]["firstName"])
+        
+        makePersonsArray(studentRoster)
+        
+        // Loop to print the full name of each person
+        for person in self.personArray
+        {
+            println("\(person.fullName(true))")
+        }
+        
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+
 
     
-//    func makePersonsArray()
-//    {
-//        
-//        for name in newArray
-//        {
-//            var newPerson = Person(firstName: name["firstName"]!, lastName: name["lastName"]!)
-//            personArray.append(newPerson)
-//        }
-//    
-//    }
+    func makePersonsArray(rosterArray: NSArray)
+    {
+        // This function takes in an Array<dictionary>.  The Creats an Array<Person> and each person object
+        // is initalized with an Id number, First name and Last name.
+        
+        for name in rosterArray
+        {
+            var newPerson:Person = Person(studentId: name["id"] as String, firstName: name["firstName"] as String, lastName: name["lastName"] as String)
+            personArray.append(newPerson)
+        }
     
+    }
+    
+
 // Canvas API Stuff:
 // I dont understand how to get the auth to work and let me pull the data I need
+
 //    let studentListURLPath = "https://canvas.instructure.com/api/v1/courses/868751/students"
 //    let apiKey = "7~CKAvoX6pZT2oeBQOWFtKzI6f9et2XdunrLMYvO5IIWNyoVvBwLoZLkpV45MFNZaK"
 //    var url = NSURL(string:studentListURLPath)
