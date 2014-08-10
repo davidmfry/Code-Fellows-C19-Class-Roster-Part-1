@@ -14,7 +14,8 @@
 import UIKit
 import Foundation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
+{
     
     var personArray = [Person]()
     
@@ -33,15 +34,28 @@ class ViewController: UIViewController {
         makePersonsArray(studentRoster)
         
         // Loop to print the full name of each person
-        for person in self.personArray
-        {
-            println("\(person.fullName(true))")
-        }
+//        for person in self.personArray
+//        {
+//            println("\(person.fullName(true))")
+//        }
         
     }
 
 
-
+    func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int
+    {
+        return personArray.count
+    }
+    
+    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell!
+    {
+            let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "myCell")
+            cell.textLabel.text = personArray[indexPath.row].firstName! + " " + personArray[indexPath.row].lastName!
+            cell.detailTextLabel.text = personArray[indexPath.row].studentId!
+        
+        
+            return cell
+    }
     
     func makePersonsArray(rosterArray: NSArray)
     {
