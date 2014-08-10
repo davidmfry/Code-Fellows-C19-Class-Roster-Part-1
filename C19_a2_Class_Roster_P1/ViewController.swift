@@ -36,25 +36,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         //makePersonsArray(studentRoster)
         getStudentList()
         
-        
-        
-        let apiKey = "7~CKAvoX6pZT2oeBQOWFtKzI6f9et2XdunrLMYvO5IIWNyoVvBwLoZLkpV45MFNZaK"
-        let authUrlPath = "https://canvas.instructure.com/api/v1/courses/868751/students?access_token=\(apiKey)"
-        println(authUrlPath)
-        
-        let url = NSURL(string: authUrlPath)
-        
-
-        
-        println(self.tableData)
-
-        
-        // Loop to print the full name of each person
-//        for person in self.personArray
-//        {
-//            println("\(person.fullName(true))")
-//        }
-        
     }
 
 
@@ -67,11 +48,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     {
         let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "myCell")
         let rowData = self.tableData[indexPath.row]  as NSDictionary
-        cell.textLabel.text = rowData["name"] as String
-        //cell.detailTextLabel.text = rowData["id"] as String
-//            cell.textLabel.text = personArray[indexPath.row].firstName! + " " + personArray[indexPath.row].lastName!
-//            cell.detailTextLabel.text = personArray[indexPath.row].studentId!
+        let studentId: Int = rowData["id"] as Int
         
+        cell.textLabel.text = self.tableData[indexPath.row]["name"] as String
+        cell.detailTextLabel.text = "\(studentId)"
         
         return cell
     }
@@ -86,7 +66,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         let task = session.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             println("Task Completed")
-            if(error)
+            if((error) != nil)
             {
                 println(error.localizedDescription)
             }
@@ -106,6 +86,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         })
         task.resume()
         
+
+        
     }
     
     func makePersonsArray(rosterArray: NSArray)
@@ -122,33 +104,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
 
-// Canvas API Stuff:
-// I dont understand how to get the auth to work and let me pull the data I need
-
-//    let studentListURLPath = "https://canvas.instructure.com/api/v1/courses/868751/students"
-//    let apiKey = "7~CKAvoX6pZT2oeBQOWFtKzI6f9et2XdunrLMYvO5IIWNyoVvBwLoZLkpV45MFNZaK"
-//    var url = NSURL(string:studentListURLPath)
-//    var request = NSURLRequest(URL: url)
-//    let queue:NSOperationQueue = NSOperationQueue()
-//    
-//    
-//    let authURL = NSURL(string: "https://canvas.instructure.com/api/v1/courses?access_token=" + self.apiKey)
-//    let task = NSURLSession.sharedSession().dataTaskWithURL(authURL){(data, response, error)
-//        in
-//    }
-//    task.resume()
-//    
-//    NSURLConnection.sendAsynchronousRequest(request, queue: queue, completionHandler:{ (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
-//   
-//    
-//    
-//    var err: NSError
-//    var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
-//    println("AsyncsynchonousRequest\(jsonResult)")
-//    
-//    
-//    })
-    
     
     
     
