@@ -17,7 +17,9 @@ import Foundation
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
 {
     
+    @IBOutlet weak var appTableView: UITableView!
     var personArray = [Person]()
+    var tableData = []
     
     // Getting the path to the plist file. The plist contains an Array<Dictionary>
     let plistPath = NSBundle.mainBundle().pathForResource("studentRoster", ofType: "plist")
@@ -55,6 +57,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         
             return cell
+    }
+    
+    func getStudentList()
+    {
+        let apiKey = "7~CKAvoX6pZT2oeBQOWFtKzI6f9et2XdunrLMYvO5IIWNyoVvBwLoZLkpV45MFNZaK"
+        let authUrlPath = "https://canvas.instructure.com/api/v1/courses/868751/students?access_token=\(apiKey)"
+        
+        let url = NSURL(string: authUrlPath)
+        let session = NSURLSession.sharedSession()
+        
+        let task = session.dataTaskWithRequest(url, completionHandler: { data, response, error -> Void in
+            println("Task Completed")
+            
+        })
+        
+        
     }
     
     func makePersonsArray(rosterArray: NSArray)
