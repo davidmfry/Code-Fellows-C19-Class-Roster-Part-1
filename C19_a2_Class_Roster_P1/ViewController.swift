@@ -33,7 +33,21 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // student roster is the plist variable wich can be opperated on.  It's an NSArray
         let studentRoster = NSArray(contentsOfFile: self.plistPath)
         
-        makePersonsArray(studentRoster)
+        //makePersonsArray(studentRoster)
+        getStudentList()
+        
+        
+        
+        let apiKey = "7~CKAvoX6pZT2oeBQOWFtKzI6f9et2XdunrLMYvO5IIWNyoVvBwLoZLkpV45MFNZaK"
+        let authUrlPath = "https://canvas.instructure.com/api/v1/courses/868751/students?access_token=\(apiKey)"
+        println(authUrlPath)
+        
+        let url = NSURL(string: authUrlPath)
+        
+
+        
+        println(self.tableData)
+
         
         // Loop to print the full name of each person
 //        for person in self.personArray
@@ -46,17 +60,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int
     {
-        return personArray.count
+        return tableData.count
     }
     
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell!
     {
-            let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "myCell")
-            cell.textLabel.text = personArray[indexPath.row].firstName! + " " + personArray[indexPath.row].lastName!
-            cell.detailTextLabel.text = personArray[indexPath.row].studentId!
+        let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "myCell")
+        let rowData = self.tableData[indexPath.row]  as NSDictionary
+        cell.textLabel.text = rowData["name"] as String
+        //cell.detailTextLabel.text = rowData["id"] as String
+//            cell.textLabel.text = personArray[indexPath.row].firstName! + " " + personArray[indexPath.row].lastName!
+//            cell.detailTextLabel.text = personArray[indexPath.row].studentId!
         
         
-            return cell
+        return cell
     }
     
     func getStudentList()
@@ -67,11 +84,27 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let url = NSURL(string: authUrlPath)
         let session = NSURLSession.sharedSession()
         
-        let task = session.dataTaskWithRequest(url, completionHandler: { data, response, error -> Void in
+        let task = session.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             println("Task Completed")
+            if(error)
+            {
+                println(error.localizedDescription)
+            }
             
+            var err: NSError?
+            var jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &err) as NSArray
+            
+            if (err != nil)
+            {
+                println("JSON Error \(err!.localizedDescription)")
+            }
+            let results = jsonResult
+            dispatch_async(dispatch_get_main_queue(), {
+                self.tableData = results
+                self.appTableView!.reloadData()
+            })
         })
-        
+        task.resume()
         
     }
     
