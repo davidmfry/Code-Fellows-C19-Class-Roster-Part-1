@@ -33,11 +33,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         makePersonsArray(studentRoster)
         
-        // Loop to print the full name of each person
-//        for person in self.personArray
-//        {
-//            println("\(person.fullName(true))")
-//        }
         
     }
 
