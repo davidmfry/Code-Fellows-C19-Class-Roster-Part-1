@@ -50,7 +50,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell!
     {
             let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "myCell")
-            cell.textLabel.text = personArray[indexPath.row].firstName! + " " + personArray[indexPath.row].lastName!
+            cell.textLabel.text = personArray[indexPath.row].fullName(false)
             cell.detailTextLabel.text = personArray[indexPath.row].studentId!
         
         
@@ -69,36 +69,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     
     }
-    
-
-// Canvas API Stuff:
-// I dont understand how to get the auth to work and let me pull the data I need
-
-//    let studentListURLPath = "https://canvas.instructure.com/api/v1/courses/868751/students"
-//    let apiKey = "7~CKAvoX6pZT2oeBQOWFtKzI6f9et2XdunrLMYvO5IIWNyoVvBwLoZLkpV45MFNZaK"
-//    var url = NSURL(string:studentListURLPath)
-//    var request = NSURLRequest(URL: url)
-//    let queue:NSOperationQueue = NSOperationQueue()
-//    
-//    
-//    let authURL = NSURL(string: "https://canvas.instructure.com/api/v1/courses?access_token=" + self.apiKey)
-//    let task = NSURLSession.sharedSession().dataTaskWithURL(authURL){(data, response, error)
-//        in
-//    }
-//    task.resume()
-//    
-//    NSURLConnection.sendAsynchronousRequest(request, queue: queue, completionHandler:{ (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
-//   
-//    
-//    
-//    var err: NSError
-//    var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
-//    println("AsyncsynchonousRequest\(jsonResult)")
-//    
-//    
-//    })
-    
-    
     
     
 }

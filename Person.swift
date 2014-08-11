@@ -25,9 +25,9 @@ class Person: NSObject
     
     func fullName (idOn: Bool) -> String
     {
-        if !idOn
+        if idOn == false
         {
-            return "Name: \(self.firstName!) \(self.lastName!)"
+            return "\(self.firstName!) \(self.lastName!)"
         }
         else
         {
