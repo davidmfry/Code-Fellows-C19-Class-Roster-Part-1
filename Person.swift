@@ -11,33 +11,32 @@ import UIKit
 
 class Person: NSObject
 {
-    var studentId: String?
-    var firstName: String?
-    var lastName: String?
-    var image: UIImage?
+    var studentId: String
+    var name: String
+    var image: UIImage
     
-    init(studentId:String, firstName: String, lastName: String)
+    init(studentId:String, name:String, image:UIImage)
     {
         self.studentId = studentId
-        self.firstName = firstName
-        self.lastName = lastName
+        self.name = name
+        self.image = image
     }
     
-    func fullName (idOn: Bool) -> String
-    {
-        if !idOn
-        {
-            return "Name: \(self.firstName!) \(self.lastName!)"
-        }
-        else
-        {
-            return "id: \(self.studentId!) Name: \(self.firstName!) \(self.lastName!)"
-        }
-    }
+//    func fullName (idOn: Bool) -> String
+//    {
+//        if !idOn
+//        {
+//            return "Name: \(self.firstName!) \(self.lastName!)"
+//        }
+//        else
+//        {
+//            return "id: \(self.studentId!) Name: \(self.firstName!) \(self.lastName!)"
+//        }
+//    }
     
     func giveStudentID() -> String
     {
-        return self.studentId!
+        return self.studentId
     }
     
    

@@ -7,14 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED03F6DA19991AC600FE2A26 /* CanvasAPIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED03F6D919991AC600FE2A26 /* CanvasAPIController.swift */; };
 		ED5607061993DB2A00B58D6B /* studentRoster.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED5607051993DB2A00B58D6B /* studentRoster.plist */; };
 		ED5AB46E1991224100D05880 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AB46D1991224100D05880 /* AppDelegate.swift */; };
 		ED5AB4711991224100D05880 /* C19_a2_Class_Roster_P1.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ED5AB46F1991224100D05880 /* C19_a2_Class_Roster_P1.xcdatamodeld */; };
-		ED5AB4731991224100D05880 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AB4721991224100D05880 /* ViewController.swift */; };
+		ED5AB4731991224100D05880 /* StudentRosterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AB4721991224100D05880 /* StudentRosterViewController.swift */; };
 		ED5AB4761991224100D05880 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED5AB4741991224100D05880 /* Main.storyboard */; };
 		ED5AB4781991224100D05880 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED5AB4771991224100D05880 /* Images.xcassets */; };
 		ED5AB4841991224100D05880 /* C19_a2_Class_Roster_P1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AB4831991224100D05880 /* C19_a2_Class_Roster_P1Tests.swift */; };
 		ED5AB48E1991226700D05880 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AB48D1991226700D05880 /* Person.swift */; };
+		ED5AF9381999773000944623 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AF9371999773000944623 /* DetailsViewController.swift */; };
 		ED7F82CE1991980D00E6F125 /* roster.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7F82CD1991980D00E6F125 /* roster.json */; };
 /* End PBXBuildFile section */
 
@@ -29,18 +31,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		ED03F6D919991AC600FE2A26 /* CanvasAPIController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasAPIController.swift; sourceTree = "<group>"; };
 		ED5607051993DB2A00B58D6B /* studentRoster.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = studentRoster.plist; sourceTree = "<group>"; };
 		ED5AB4681991224000D05880 /* C19_a2_Class_Roster_P1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = C19_a2_Class_Roster_P1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED5AB46C1991224100D05880 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ED5AB46D1991224100D05880 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ED5AB4701991224100D05880 /* C19_a2_Class_Roster_P1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = C19_a2_Class_Roster_P1.xcdatamodel; sourceTree = "<group>"; };
-		ED5AB4721991224100D05880 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		ED5AB4721991224100D05880 /* StudentRosterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentRosterViewController.swift; sourceTree = "<group>"; };
 		ED5AB4751991224100D05880 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ED5AB4771991224100D05880 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		ED5AB47D1991224100D05880 /* C19_a2_Class_Roster_P1Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = C19_a2_Class_Roster_P1Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED5AB4821991224100D05880 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ED5AB4831991224100D05880 /* C19_a2_Class_Roster_P1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C19_a2_Class_Roster_P1Tests.swift; sourceTree = "<group>"; };
 		ED5AB48D1991226700D05880 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Person.swift; path = ../Person.swift; sourceTree = "<group>"; };
+		ED5AF9371999773000944623 /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		ED7F82CD1991980D00E6F125 /* roster.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = roster.json; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -83,9 +87,11 @@
 		ED5AB46A1991224000D05880 /* C19_a2_Class_Roster_P1 */ = {
 			isa = PBXGroup;
 			children = (
+				ED03F6D919991AC600FE2A26 /* CanvasAPIController.swift */,
 				ED5AB48D1991226700D05880 /* Person.swift */,
 				ED5AB46D1991224100D05880 /* AppDelegate.swift */,
-				ED5AB4721991224100D05880 /* ViewController.swift */,
+				ED5AB4721991224100D05880 /* StudentRosterViewController.swift */,
+				ED5AF9371999773000944623 /* DetailsViewController.swift */,
 				ED5AB4741991224100D05880 /* Main.storyboard */,
 				ED5AB4771991224100D05880 /* Images.xcassets */,
 				ED5AB46F1991224100D05880 /* C19_a2_Class_Roster_P1.xcdatamodeld */,
@@ -222,10 +228,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED5AB4731991224100D05880 /* ViewController.swift in Sources */,
+				ED03F6DA19991AC600FE2A26 /* CanvasAPIController.swift in Sources */,
+				ED5AB4731991224100D05880 /* StudentRosterViewController.swift in Sources */,
 				ED5AB46E1991224100D05880 /* AppDelegate.swift in Sources */,
 				ED5AB48E1991226700D05880 /* Person.swift in Sources */,
 				ED5AB4711991224100D05880 /* C19_a2_Class_Roster_P1.xcdatamodeld in Sources */,
+				ED5AF9381999773000944623 /* DetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
