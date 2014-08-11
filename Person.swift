@@ -25,7 +25,9 @@ class Person: NSObject
     
     func fullName (idOn: Bool) -> String
     {
-        if !idOn
+        // This prints out the full name of the object.  The idOn is a variable to give the option to display the student Id.
+
+        if idOn == false
         {
             return "Name: \(self.firstName!) \(self.lastName!)"
         }
