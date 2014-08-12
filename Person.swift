@@ -11,9 +11,9 @@ import UIKit
 
 class Person: NSObject
 {
-    var studentId: String?
-    var firstName: String?
-    var lastName: String?
+    var studentId: String
+    var firstName: String
+    var lastName: String
     var image: UIImage?
     
     init(studentId:String, firstName: String, lastName: String)
@@ -27,17 +27,17 @@ class Person: NSObject
     {
         if !idOn
         {
-            return "Name: \(self.firstName!) \(self.lastName!)"
+            return "Name: \(self.firstName) \(self.lastName)"
         }
         else
         {
-            return "id: \(self.studentId!) Name: \(self.firstName!) \(self.lastName!)"
+            return "id: \(self.studentId) Name: \(self.firstName) \(self.lastName)"
         }
     }
     
     func giveStudentID() -> String
     {
-        return self.studentId!
+        return self.studentId
     }
     
    
