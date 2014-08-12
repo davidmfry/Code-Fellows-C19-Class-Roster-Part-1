@@ -11,21 +11,36 @@ import UIKit
 class DetailViewController: UIViewController {
 
     @IBOutlet var personImageView: UIImageView!
-    @IBOutlet var personNameLabel: UILabel!
+    @IBOutlet var firstNameTextField: UITextField!
+    @IBOutlet var lastNameTextField: UITextField!
+
     
     var person = Person?()
+    
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+    }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.personNameLabel.text = "\(person?.firstName)" + " " + "\(person?.lastName)"
+        self.firstNameTextField.text = person!.firstName
+        self.lastNameTextField.text = person!.lastName
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    @IBAction func firstNameTextFieldChange(sender: AnyObject)
+    {
+        self.person!.firstName = self.firstNameTextField.text
+    }
     
+    @IBAction func lastNameTextFieldChanged(sender: AnyObject)
+    {
+        self.person!.lastName = self.lastNameTextField.text
+    }
 
     /*
     // MARK: - Navigation
