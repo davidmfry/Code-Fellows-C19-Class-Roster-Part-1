@@ -19,6 +19,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     var personArray = [Person]()
     
+    @IBOutlet var appTableView: UITableView!
     // Getting the path to the plist file. The plist contains an Array<Dictionary>
     let plistPath = NSBundle.mainBundle().pathForResource("studentRoster", ofType: "plist")
     
@@ -46,11 +47,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     {
             let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "myCell")
             cell.textLabel.text = personArray[indexPath.row].fullName(false)
-            cell.detailTextLabel.text = personArray[indexPath.row].studentId!
+            cell.detailTextLabel.text = personArray[indexPath.row].studentId
         
         
             return cell
     }
+    
+    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!)
+    {
+        
+        
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!)
+    {
+        var detailViewController = segue.destinationViewController as DetailViewController
+        var personIndex = appTableView.indexPathForSelectedRow().row
+        var selectedPerson = self.personArray[personIndex]
+        detailViewController.person = selectedPerson
+    }
+    
     
     func makePersonsArray(rosterArray: NSArray)
     {
