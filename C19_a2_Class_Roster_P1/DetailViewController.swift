@@ -7,14 +7,15 @@
 //
 
 import UIKit
+import MobileCoreServices
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate
+{
 
     @IBOutlet var personImageView: UIImageView!
     @IBOutlet var firstNameTextField: UITextField!
     @IBOutlet var lastNameTextField: UITextField!
 
-    
     var person = Person?()
     
     required init(coder aDecoder: NSCoder!) {
@@ -26,6 +27,8 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         self.firstNameTextField.text = person!.firstName
         self.lastNameTextField.text = person!.lastName
+        //self.person?.image = UIImage(named: "blank-storm-trooper")
+        personImageView.image = UIImage(named: "blank-storm-trooper")
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,15 +44,7 @@ class DetailViewController: UIViewController {
     {
         self.person!.lastName = self.lastNameTextField.text
     }
+    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

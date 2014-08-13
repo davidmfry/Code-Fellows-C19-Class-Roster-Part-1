@@ -54,6 +54,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as UITableViewCell
             cell.textLabel.text = personArray[indexPath.row].fullName(false)
             cell.detailTextLabel.text = personArray[indexPath.row].studentId
+            cell.imageView.image = personArray[indexPath.row].image
         
         
             return cell
