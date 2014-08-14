@@ -14,14 +14,16 @@ class Person: NSObject
     var studentId: String
     var firstName: String
     var lastName: String
+    var role: String
     var image: UIImage?
-    var role: String?
     
-    init(studentId:String, firstName: String, lastName: String)
+    
+    init(studentId:String, firstName: String, lastName: String, role: String)
     {
         self.studentId = studentId
         self.firstName = firstName
         self.lastName = lastName
+        self.role = role
     }
     
     func fullName (idOn: Bool) -> String

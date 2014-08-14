@@ -3,7 +3,9 @@
 <plist version="1.0">
 <array>
 	<dict>
-		<key>id</key>
+        <key>role</key>
+        <string>student</string>
+        <key>id</key>
 		<string>3987831</string>
 		<key>firstName</key>
 		<string>Nate</string>
@@ -11,6 +13,8 @@
 		<string>Birkholz</string>
 	</dict>
 	<dict>
+        <key>role</key>
+        <string>student</string>
 		<key>id</key>
 		<string>3927520</string>
 		<key>firstName</key>
@@ -19,6 +23,8 @@
 		<string>Brightbill</string>
 	</dict>
 	<dict>
+        <key>role</key>
+        <string>student</string>
 		<key>id</key>
 		<string>3994005</string>
 		<key>firstName</key>
@@ -27,6 +33,8 @@
 		<string>Chavez</string>
 	</dict>
 	<dict>
+        <key>role</key>
+        <string>student</string>
 		<key>id</key>
 		<string>3927495</string>
 		<key>firstName</key>
@@ -35,6 +43,8 @@
 		<string>Ferderer</string>
 	</dict>
 	<dict>
+        <key>role</key>
+        <string>student</string>
 		<key>id</key>
 		<string>3987826</string>
 		<key>firstName</key>
@@ -43,6 +53,8 @@
 		<string>Fry</string>
 	</dict>
 	<dict>
+        <key>role</key>
+        <string>student</string>
 		<key>id</key>
 		<string>3935910</string>
 		<key>firstName</key>
@@ -51,6 +63,8 @@
 		<string>Petrica Gherle</string>
 	</dict>
 	<dict>
+        <key>role</key>
+        <string>student</string>
 		<key>id</key>
 		<string>3932232</string>
 		<key>firstName</key>
@@ -59,6 +73,8 @@
 		<string>Hawken</string>
 	</dict>
 	<dict>
+        <key>role</key>
+        <string>student</string>
 		<key>id</key>
 		<string>3994025</string>
 		<key>firstName</key>
@@ -67,6 +83,8 @@
 		<string>Kazi</string>
 	</dict>
 	<dict>
+        <key>role</key>
+        <string>student</string>
 		<key>id</key>
 		<string>3994024</string>
 		<key>firstName</key>
@@ -75,6 +93,8 @@
 		<string>Klein</string>
 	</dict>
 	<dict>
+        <key>role</key>
+        <string>student</string>
 		<key>id</key>
 		<string>3932235</string>
 		<key>firstName</key>
@@ -83,6 +103,8 @@
 		<string>Kolodziejczak</string>
 	</dict>
 	<dict>
+        <key>role</key>
+        <string>student</string>
 		<key>id</key>
 		<string>3987825</string>
 		<key>firstName</key>
@@ -91,6 +113,8 @@
 		<string>Lewis</string>
 	</dict>
 	<dict>
+        <key>role</key>
+        <string>student</string>
 		<key>id</key>
 		<string>3987835</string>
 		<key>firstName</key>
@@ -99,6 +123,8 @@
 		<string>Ma</string>
 	</dict>
 	<dict>
+        <key>role</key>
+        <string>student</string>
 		<key>id</key>
 		<string>3987832</string>
 		<key>firstName</key>
@@ -107,6 +133,8 @@
 		<string>MacPhee</string>
 	</dict>
 	<dict>
+        <key>role</key>
+        <string>student</string>
 		<key>id</key>
 		<string>3927488</string>
 		<key>firstName</key>
@@ -115,6 +143,8 @@
 		<string>McAleer</string>
 	</dict>
 	<dict>
+        <key>role</key>
+        <string>student</string>
 		<key>id</key>
 		<string>3932244</string>
 		<key>firstName</key>
@@ -123,6 +153,8 @@
 		<string>Mendez</string>
 	</dict>
 	<dict>
+        <key>role</key>
+        <string>student</string>
 		<key>id</key>
 		<string>3987827</string>
 		<key>firstName</key>
@@ -131,6 +163,8 @@
 		<string>Morris</string>
 	</dict>
 	<dict>
+        <key>role</key>
+        <string>student</string>
 		<key>id</key>
 		<string>3994006</string>
 		<key>firstName</key>
@@ -139,6 +173,8 @@
 		<string>North</string>
 	</dict>
 	<dict>
+        <key>role</key>
+        <string>student</string>
 		<key>id</key>
 		<string>3987834</string>
 		<key>firstName</key>
@@ -147,6 +183,8 @@
 		<string>Pham</string>
 	</dict>
 	<dict>
+        <key>role</key>
+        <string>student</string>
 		<key>id</key>
 		<string>3927541</string>
 		<key>firstName</key>
@@ -155,6 +193,8 @@
 		<string>Richman</string>
 	</dict>
 	<dict>
+        <key>role</key>
+        <string>student</string>
 		<key>id</key>
 		<string>3927503</string>
 		<key>firstName</key>
@@ -163,6 +203,8 @@
 		<string>Thueringer</string>
 	</dict>
 	<dict>
+        <key>role</key>
+        <string>student</string>
 		<key>id</key>
 		<string>3987830</string>
 		<key>firstName</key>
@@ -171,6 +213,8 @@
 		<string>Vu</string>
 	</dict>
 	<dict>
+        <key>role</key>
+        <string>student</string>
 		<key>id</key>
 		<string>3987833</string>
 		<key>firstName</key>
@@ -179,6 +223,8 @@
 		<string>Walkingstick</string>
 	</dict>
 	<dict>
+        <key>role</key>
+        <string>student</string>
 		<key>id</key>
 		<string>3987829</string>
 		<key>firstName</key>
@@ -187,6 +233,8 @@
 		<string>Wong</string>
 	</dict>
 	<dict>
+        <key>role</key>
+        <string>student</string>
 		<key>id</key>
 		<string>3987824</string>
 		<key>firstName</key>

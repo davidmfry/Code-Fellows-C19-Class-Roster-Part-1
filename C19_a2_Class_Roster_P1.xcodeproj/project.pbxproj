@@ -17,6 +17,7 @@
 		ED5AB4841991224100D05880 /* C19_a2_Class_Roster_P1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AB4831991224100D05880 /* C19_a2_Class_Roster_P1Tests.swift */; };
 		ED5AB48E1991226700D05880 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AB48D1991226700D05880 /* Person.swift */; };
 		ED7F82CE1991980D00E6F125 /* roster.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7F82CD1991980D00E6F125 /* roster.json */; };
+		EDA92572199D03D4009EBA9B /* teacherRoster.plist in Resources */ = {isa = PBXBuildFile; fileRef = EDA92571199D03D4009EBA9B /* teacherRoster.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		ED5AB4831991224100D05880 /* C19_a2_Class_Roster_P1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C19_a2_Class_Roster_P1Tests.swift; sourceTree = "<group>"; };
 		ED5AB48D1991226700D05880 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Person.swift; path = ../Person.swift; sourceTree = "<group>"; };
 		ED7F82CD1991980D00E6F125 /* roster.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = roster.json; sourceTree = SOURCE_ROOT; };
+		EDA92571199D03D4009EBA9B /* teacherRoster.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = teacherRoster.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 				ED5AB4771991224100D05880 /* Images.xcassets */,
 				ED5AB46F1991224100D05880 /* C19_a2_Class_Roster_P1.xcdatamodeld */,
 				ED7F82CD1991980D00E6F125 /* roster.json */,
+				EDA92571199D03D4009EBA9B /* teacherRoster.plist */,
 				ED5607051993DB2A00B58D6B /* studentRoster.plist */,
 				ED5AB46B1991224100D05880 /* Supporting Files */,
 			);
@@ -208,6 +211,7 @@
 				ED5AB4761991224100D05880 /* Main.storyboard in Resources */,
 				ED5AB4781991224100D05880 /* Images.xcassets in Resources */,
 				ED5607061993DB2A00B58D6B /* studentRoster.plist in Resources */,
+				EDA92572199D03D4009EBA9B /* teacherRoster.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

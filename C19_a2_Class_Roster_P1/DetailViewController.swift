@@ -17,30 +17,48 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet var lastNameTextField: UITextField!
 
     var selectedPerson = Person?()
+
     
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.firstNameTextField.text = selectedPerson!.firstName
-        self.lastNameTextField.text = selectedPerson!.lastName
-        //self.person?.image = UIImage(named: "blank-storm-trooper")
-        personImageView.image = UIImage(named: "blank-storm-trooper")
+        self.firstNameTextField.text = self.selectedPerson?.firstName
+        self.lastNameTextField.text = self.selectedPerson?.lastName
+        self.personImageView.image = displayImage(self.selectedPerson!)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
     @IBAction func firstNameTextFieldChange(sender: AnyObject)
     {
-        self.selectedPerson!.firstName = self.firstNameTextField.text
+        self.selectedPerson?.firstName = self.firstNameTextField.text
     }
     
     @IBAction func lastNameTextFieldChanged(sender: AnyObject)
     {
-        self.selectedPerson!.lastName = self.lastNameTextField.text
+        self.selectedPerson?.lastName = self.lastNameTextField.text
     }
+    
+    func displayImage(person:Person) -> UIImage
+    {
+        if person.role == "teacher"
+        {
+            return UIImage(named: "blank-darth-vader")
+        }
+        else
+        {
+            return UIImage(named: "blank-storm-trooper")
+        }
+    }
+    
+  
+    
+
     
 
 

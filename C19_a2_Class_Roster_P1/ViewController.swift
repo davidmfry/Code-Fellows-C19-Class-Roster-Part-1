@@ -18,13 +18,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 {
     
     var personArray = [Person]()
+    var teacherArray = [Person]()
     
     var cellIdentifier = "myCell"
-    var teacherArray = ["Name", "Name2"]
     
     @IBOutlet var appTableView: UITableView!
     // Getting the path to the plist file. The plist contains an Array<Dictionary>
-    let plistPath = NSBundle.mainBundle().pathForResource("studentRoster", ofType: "plist")
+    let studentPlistPath = NSBundle.mainBundle().pathForResource("studentRoster", ofType: "plist")
+    let teacherPlistPath = NSBundle.mainBundle().pathForResource("teacherRoster", ofType: "plist")
     
     
     
@@ -33,9 +34,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         
         // student roster is the plist variable wich can be opperated on.  It's an NSArray
-        let studentRoster = NSArray(contentsOfFile: self.plistPath)
+        let studentRoster = NSArray(contentsOfFile: self.studentPlistPath)
+        let teacherRoster = NSArray(contentsOfFile: self.teacherPlistPath)
         
-        makePersonsArray(studentRoster)
+        self.personArray = makePeopleArray(studentRoster)
+        self.teacherArray = makePeopleArray(teacherRoster)
         
         
     }
@@ -93,7 +96,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         else
         {
-            cell.textLabel.text = teacherArray[indexPath.row]
+            cell.textLabel.text = teacherArray[indexPath.row].fullName(false)
+            cell.detailTextLabel.text = teacherArray[indexPath.row].studentId
+            cell.imageView.image = teacherArray[indexPath.row].image
             return cell
         }
     
@@ -113,24 +118,39 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         {
             var detailViewController = segue.destinationViewController as DetailViewController
             var personIndex = appTableView.indexPathForSelectedRow().row
-            var selectedPerson = self.personArray[personIndex]
+            var selectedPerson: Person?
+            if appTableView.indexPathForSelectedRow().section == 0
+            {
+                selectedPerson = self.personArray[personIndex]
+            }
+            else
+            {
+                selectedPerson = self.teacherArray[personIndex]
+            }
+            
             detailViewController.selectedPerson = selectedPerson
         }
     }
     
     
-    func makePersonsArray(rosterArray: NSArray)
+    func makePeopleArray(rosterArray: NSArray) -> Array<Person>
     {
         // This function takes in an Array<dictionary>.  The Creats an Array<Person> and each person object
         // is initalized with an Id number, First name and Last name.
         
+        var people = [Person]()
+        
         for name in rosterArray
         {
-            var newPerson:Person = Person(studentId: name["id"] as String, firstName: name["firstName"] as String, lastName: name["lastName"] as String)
-            personArray.append(newPerson)
+            var newPerson:Person = Person(studentId: name["id"] as String, firstName: name["firstName"] as String, lastName: name["lastName"] as String, role: name["role"] as String)
+            people.append(newPerson)
         }
+        
+        return people
     
     }
+    
+
     
     
 }
