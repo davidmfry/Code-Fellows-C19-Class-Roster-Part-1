@@ -16,7 +16,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet var firstNameTextField: UITextField!
     @IBOutlet var lastNameTextField: UITextField!
 
-    var person = Person?()
+    var selectedPerson = Person?()
     
     required init(coder aDecoder: NSCoder!) {
         super.init(coder: aDecoder)
@@ -25,8 +25,8 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.firstNameTextField.text = person!.firstName
-        self.lastNameTextField.text = person!.lastName
+        self.firstNameTextField.text = selectedPerson!.firstName
+        self.lastNameTextField.text = selectedPerson!.lastName
         //self.person?.image = UIImage(named: "blank-storm-trooper")
         personImageView.image = UIImage(named: "blank-storm-trooper")
     }
@@ -37,12 +37,12 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     @IBAction func firstNameTextFieldChange(sender: AnyObject)
     {
-        self.person!.firstName = self.firstNameTextField.text
+        self.selectedPerson!.firstName = self.firstNameTextField.text
     }
     
     @IBAction func lastNameTextFieldChanged(sender: AnyObject)
     {
-        self.person!.lastName = self.lastNameTextField.text
+        self.selectedPerson!.lastName = self.lastNameTextField.text
     }
     
 
