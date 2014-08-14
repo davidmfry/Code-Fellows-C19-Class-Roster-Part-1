@@ -20,6 +20,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var personArray = [Person]()
     
     var cellIdentifier = "myCell"
+    var teacherArray = ["Name", "Name2"]
     
     @IBOutlet var appTableView: UITableView!
     // Getting the path to the plist file. The plist contains an Array<Dictionary>
@@ -43,21 +44,61 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.appTableView.reloadData()
     }
 
-
+    
+    func numberOfSectionsInTableView(tableView: UITableView!) -> Int
+    {
+        return 2
+    }
+    
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int
     {
-        return personArray.count
+        // Student section
+        if section == 0
+        {
+            return personArray.count
+        }
+        // Teacher section
+        else
+        {
+            return teacherArray.count
+        }
     }
+    
+    func tableView(tableView: UITableView!, titleForHeaderInSection section: Int) -> String!
+    {
+        // Adds the titles for the section header
+        if section == 0
+        {
+            return "Students"
+        }
+        else
+        {
+            return "Teachers"
+        }
+    }
+    
+    
     
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell!
     {
-            let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as UITableViewCell
+        
+        if indexPath.section == 0
+        {
+        
             cell.textLabel.text = personArray[indexPath.row].fullName(false)
             cell.detailTextLabel.text = personArray[indexPath.row].studentId
             cell.imageView.image = personArray[indexPath.row].image
-        
-        
             return cell
+        }
+        else
+        {
+            cell.textLabel.text = teacherArray[indexPath.row]
+            return cell
+        }
+    
+    
+
     }
     
     func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!)

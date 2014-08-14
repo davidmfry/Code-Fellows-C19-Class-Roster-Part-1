@@ -15,6 +15,7 @@ class Person: NSObject
     var firstName: String
     var lastName: String
     var image: UIImage?
+    var role: String?
     
     init(studentId:String, firstName: String, lastName: String)
     {

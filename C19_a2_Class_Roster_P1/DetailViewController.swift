@@ -18,9 +18,6 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
 
     var selectedPerson = Person?()
     
-    required init(coder aDecoder: NSCoder!) {
-        super.init(coder: aDecoder)
-    }
     
     override func viewDidLoad()
     {
