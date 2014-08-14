@@ -54,15 +54,90 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="NbC-KZ-Jeb"/>
+                    <navigationItem key="navigationItem" id="NbC-KZ-Jeb">
+                        <barButtonItem key="rightBarButtonItem" title="Add Person" id="tny-5W-5vj">
+                            <connections>
+                                <segue destination="T5A-9p-USA" kind="modal" identifier="segueToAddPersonController" id="Qf7-JC-Ovz"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="appTableView" destination="LuC-cj-qr5" id="V6e-dP-CRj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+                <exit id="OaA-W1-5jK" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="754" y="355"/>
+        </scene>
+        <!--Add Person View Controller-->
+        <scene sceneID="gLu-Xa-akB">
+            <objects>
+                <viewController id="T5A-9p-USA" customClass="AddPersonViewController" customModule="C19_a2_Class_Roster_P1" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0TS-0C-G6I"/>
+                        <viewControllerLayoutGuide type="bottom" id="UOj-Xm-6xd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uBb-C9-hPm">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qcR-kB-jfl">
+                                <rect key="frame" x="16" y="177" width="288" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nFu-2t-quk">
+                                <rect key="frame" x="16" y="215" width="288" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Id Number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QHc-8Y-pO6">
+                                <rect key="frame" x="16" y="253" width="288" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Student or Teacher" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X90-hx-JD4">
+                                <rect key="frame" x="16" y="291" width="288" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eMg-f2-3BV">
+                                <rect key="frame" x="16" y="329" width="288" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Finished">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="OaA-W1-5jK" kind="unwind" unwindAction="exitToRootViewController:" id="1W6-Ib-RWR"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d2n-qh-mMU">
+                                <rect key="frame" x="178" y="82" width="126" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Take Photo">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="blank-carbon-han" translatesAutoresizingMaskIntoConstraints="NO" id="km6-tF-cmU">
+                                <rect key="frame" x="16" y="20" width="154" height="145"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="firstNameTextField" destination="qcR-kB-jfl" id="9DP-2S-p9E"/>
+                        <outlet property="idNumberTextField" destination="QHc-8Y-pO6" id="7Pt-Nc-Yl7"/>
+                        <outlet property="lastNameTextField" destination="nFu-2t-quk" id="XOs-JZ-qUf"/>
+                        <outlet property="roleTextField" destination="X90-hx-JD4" id="Igy-8r-GBr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6TN-u0-sg2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1194" y="-276"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="QFR-NM-lAz">
@@ -77,10 +152,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="blank-storm-trooper" translatesAutoresizingMaskIntoConstraints="NO" id="aIg-NW-d4I">
-                                <rect key="frame" x="16" y="72" width="133" height="128"/>
+                                <rect key="frame" x="48" y="72" width="225" height="216"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zWu-a0-fNx">
-                                <rect key="frame" x="157" y="86" width="147" height="30"/>
+                                <rect key="frame" x="28" y="296" width="265" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
@@ -88,7 +163,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PCt-CV-5nk">
-                                <rect key="frame" x="157" y="124" width="147" height="30"/>
+                                <rect key="frame" x="28" y="334" width="265" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
@@ -129,6 +204,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="blank-carbon-han" width="225" height="225"/>
         <image name="blank-storm-trooper" width="500" height="500"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

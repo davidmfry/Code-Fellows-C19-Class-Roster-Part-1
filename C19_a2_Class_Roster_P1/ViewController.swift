@@ -17,13 +17,15 @@ import Foundation
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
 {
     
-    var personArray = [Person]()
-    var teacherArray = [Person]()
+    var personArray = [Person]()            // An array to hold off the student objects after they are created by makePeopleArray
+    var teacherArray = [Person]()           // An array that holds teacher objects
     
-    var cellIdentifier = "myCell"
+    var cellIdentifier = "myCell"           // Name for the cell in the table view
+    
+    var numberOfSection = 2
     
     @IBOutlet var appTableView: UITableView!
-    // Getting the path to the plist file. The plist contains an Array<Dictionary>
+    // Getting the path to the plist files. The plist contains an Array<Dictionary>
     let studentPlistPath = NSBundle.mainBundle().pathForResource("studentRoster", ofType: "plist")
     let teacherPlistPath = NSBundle.mainBundle().pathForResource("teacherRoster", ofType: "plist")
     
@@ -33,7 +35,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     {
         super.viewDidLoad()
         
-        // student roster is the plist variable wich can be opperated on.  It's an NSArray
+        // student and teacher roster is the plist variable wich can be opperated on.  It's an NSArray
         let studentRoster = NSArray(contentsOfFile: self.studentPlistPath)
         let teacherRoster = NSArray(contentsOfFile: self.teacherPlistPath)
         
@@ -42,15 +44,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         
     }
+    
     override func viewWillAppear(animated: Bool)
     {
+        // Reloads the tabelView after it comes back from the DetailViewController
         self.appTableView.reloadData()
     }
 
     
     func numberOfSectionsInTableView(tableView: UITableView!) -> Int
     {
-        return 2
+        return numberOfSection
     }
     
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int
@@ -86,6 +90,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as UITableViewCell
         
+        // Student cell information
         if indexPath.section == 0
         {
         
@@ -94,6 +99,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             cell.imageView.image = personArray[indexPath.row].image
             return cell
         }
+        // Teacher cell infromation
         else
         {
             cell.textLabel.text = teacherArray[indexPath.row].fullName(false)
@@ -106,12 +112,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     }
     
-    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!)
-    {
-        
-        
-    }
-    
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!)
     {
         if segue.identifier == "segueToDetailView"
@@ -119,17 +119,28 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             var detailViewController = segue.destinationViewController as DetailViewController
             var personIndex = appTableView.indexPathForSelectedRow().row
             var selectedPerson: Person?
+            
+            // Checks to see what type of person objects is going to passed in the segue.  Its
+            // Either a student or teacher person object
+            
             if appTableView.indexPathForSelectedRow().section == 0
             {
                 selectedPerson = self.personArray[personIndex]
             }
+            
             else
             {
                 selectedPerson = self.teacherArray[personIndex]
             }
-            
+            // Passes the person object by referance to the detailViewController
             detailViewController.selectedPerson = selectedPerson
         }
+        
+    }
+    
+    @IBAction func exitToRootViewController(segue: UIStoryboardSegue)
+    {
+    
     }
     
     
@@ -143,6 +154,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         for name in rosterArray
         {
             var newPerson:Person = Person(studentId: name["id"] as String, firstName: name["firstName"] as String, lastName: name["lastName"] as String, role: name["role"] as String)
+            if newPerson.role == "teacher"
+            {
+                newPerson.image = UIImage(named: "blank-darth-vader")
+            }
+            else
+            {
+                newPerson.image = UIImage(named: "blank-storm-trooper")
+            }
             people.append(newPerson)
         }
         
