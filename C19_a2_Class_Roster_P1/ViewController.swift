@@ -19,12 +19,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     var personArray = [Person]()            // An array to hold off the student objects after they are created by makePeopleArray
     var teacherArray = [Person]()           // An array that holds teacher objects
-    
     var cellIdentifier = "myCell"           // Name for the cell in the table view
-    
     var numberOfSection = 2
     
-//    var newPerson = Person(studentId: "123456", firstName: "", lastName: "", role: "")
     
     @IBOutlet var appTableView: UITableView!
     // Getting the path to the plist files. The plist contains an Array<Dictionary>
