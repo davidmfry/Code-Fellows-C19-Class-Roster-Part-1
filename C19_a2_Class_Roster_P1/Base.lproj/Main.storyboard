@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6205" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="eHd-JF-tfS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6205" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="eHd-JF-tfS">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6198"/>
     </dependencies>
@@ -87,21 +87,33 @@
                                 <rect key="frame" x="16" y="177" width="288" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="firstNameTextFieldChanged:" destination="T5A-9p-USA" eventType="editingDidEnd" id="UTV-7F-UCf"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nFu-2t-quk">
                                 <rect key="frame" x="16" y="215" width="288" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="lastNameTextFieldChanged:" destination="T5A-9p-USA" eventType="editingDidEnd" id="5iw-E1-9TK"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Id Number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QHc-8Y-pO6">
                                 <rect key="frame" x="16" y="253" width="288" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="idTextFieldChanged:" destination="T5A-9p-USA" eventType="editingDidEnd" id="etv-Vp-iJh"/>
+                                </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Student or Teacher" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X90-hx-JD4">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="student or teacher" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X90-hx-JD4">
                                 <rect key="frame" x="16" y="291" width="288" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="roleTextFieldChanged:" destination="T5A-9p-USA" eventType="editingDidEnd" id="P8Q-be-0AI"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eMg-f2-3BV">
                                 <rect key="frame" x="16" y="329" width="288" height="30"/>
@@ -132,7 +144,8 @@
                         <outlet property="firstNameTextField" destination="qcR-kB-jfl" id="9DP-2S-p9E"/>
                         <outlet property="idNumberTextField" destination="QHc-8Y-pO6" id="7Pt-Nc-Yl7"/>
                         <outlet property="lastNameTextField" destination="nFu-2t-quk" id="XOs-JZ-qUf"/>
-                        <outlet property="roleTextField" destination="X90-hx-JD4" id="Igy-8r-GBr"/>
+                        <outlet property="profileImage" destination="km6-tF-cmU" id="HiU-va-ped"/>
+                        <outlet property="roleTextField" destination="X90-hx-JD4" id="747-qA-J0w"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6TN-u0-sg2" userLabel="First Responder" sceneMemberID="firstResponder"/>

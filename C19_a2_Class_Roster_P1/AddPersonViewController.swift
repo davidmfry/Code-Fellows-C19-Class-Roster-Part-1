@@ -10,13 +10,14 @@ import UIKit
 
 class AddPersonViewController: UIViewController, UITextFieldDelegate {
 
-    var newPerson = Person?()
+    var newPerson = Person(studentId: "", firstName: "", lastName: "", role: "")
+    var testNum = 10
     
     @IBOutlet var firstNameTextField: UITextField!
     @IBOutlet var lastNameTextField: UITextField!
     @IBOutlet var idNumberTextField: UITextField!
     @IBOutlet var roleTextField: UITextField!
-    
+    @IBOutlet var profileImage: UIImageView!
     
     override func viewDidLoad()
     {
@@ -25,25 +26,26 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate {
         self.lastNameTextField.delegate = self
         self.idNumberTextField.delegate = self
         self.roleTextField.delegate = self
-
+        self.profileImage.image = UIImage(named: "blank-carbon-han")
        
     }
 
-    override func viewDidDisappear(animated: Bool)
+    override func viewWillDisappear(animated: Bool)
     {
-        self.newPerson?.firstName = self.firstNameTextField.text
-        self.newPerson?.lastName = self.lastNameTextField.text
-        self.newPerson?.studentId = self.idNumberTextField.text
-        self.newPerson?.role = self.roleTextField.text
-        
+//        println("disappered")
+//        self.newPerson.firstName = self.firstNameTextField.text
+//        self.newPerson.lastName = self.lastNameTextField.text
+//        self.newPerson.studentId = self.idNumberTextField.text
+//        self.newPerson.role = self.roleTextField.text
+//        
     }
+  
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
         
     }
-    
-    
     
     
     func textFieldShouldReturn(textField:UITextField!) -> Bool
@@ -59,6 +61,29 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate {
         self.view.endEditing(true)
     }
     
+    @IBAction func firstNameTextFieldChanged(sender: AnyObject)
+    {
+        //self.newPerson.firstName = self.firstNameTextField.text
+    }
+    @IBAction func lastNameTextFieldChanged(sender: AnyObject)
+    {
+        //self.newPerson.lastName = self.lastNameTextField.text
+    }
+
+    @IBAction func idTextFieldChanged(sender: AnyObject)
+    {
+        //self.newPerson.studentId = self.idNumberTextField.text
+    }
+
+    @IBAction func roleTextFieldChanged(sender: AnyObject)
+    {
+        //self.newPerson.role = self.roleTextField.text
+    }
+    
+    func createPerson() -> Person
+    {
+        return Person(studentId: self.idNumberTextField.text, firstName: self.firstNameTextField.text, lastName: self.lastNameTextField.text, role: self.roleTextField.text)
+    }
     
     /*
     // MARK: - Navigation

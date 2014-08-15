@@ -24,6 +24,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     var numberOfSection = 2
     
+//    var newPerson = Person(studentId: "123456", firstName: "", lastName: "", role: "")
+    
     @IBOutlet var appTableView: UITableView!
     // Getting the path to the plist files. The plist contains an Array<Dictionary>
     let studentPlistPath = NSBundle.mainBundle().pathForResource("studentRoster", ofType: "plist")
@@ -48,6 +50,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewWillAppear(animated: Bool)
     {
         // Reloads the tabelView after it comes back from the DetailViewController
+        //println(newPerson?.firstName)
+        //println(self.testNum)
         self.appTableView.reloadData()
     }
 
@@ -136,11 +140,27 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             detailViewController.selectedPerson = selectedPerson
         }
         
+    
+        
     }
     
     @IBAction func exitToRootViewController(segue: UIStoryboardSegue)
     {
-    
+        var sourceViewController = segue.sourceViewController as AddPersonViewController
+        
+        var newPerson = Person(studentId: sourceViewController.idNumberTextField.text, firstName: sourceViewController.firstNameTextField.text, lastName: sourceViewController.lastNameTextField.text, role: sourceViewController.roleTextField.text)
+        newPerson.image = sourceViewController.profileImage.image
+        
+        if newPerson.role == "teacher"
+        {
+            self.teacherArray.append(newPerson)
+        }
+        else if newPerson.role == "student"
+        {
+            self.personArray.append(newPerson)
+        }
+        
+        
     }
     
     
