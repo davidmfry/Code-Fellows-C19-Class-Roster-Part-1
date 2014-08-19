@@ -8,7 +8,7 @@
 
 // Canvas API to get all students in C19 https://canvas.instructure.com/api/v1/courses/868751/students
 // Canvas API to get student object https://canvas.instructure.com/api/v1/users/3987826/profile (/users/:user_id/profile)
-// API Key: 7~CKAvoX6pZT2oeBQOWFtKzI6f9et2XdunrLMYvO5IIWNyoVvBwLoZLkpV45MFNZaK
+
 
 
 import UIKit
