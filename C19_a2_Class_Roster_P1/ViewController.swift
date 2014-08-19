@@ -58,8 +58,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewWillAppear(animated: Bool)
     {
         // Reloads the tabelView after it comes back from the DetailViewController
-        self.saveFile(self.personArray, fileName: self.studentFilePath!)
-        self.saveFile(self.teacherArray, fileName: self.teacherFilePath!)
+        //self.saveFile(self.personArray, fileName: self.studentFilePath!)
+        //self.saveFile(self.teacherArray, fileName: self.teacherFilePath!)
         self.appTableView.reloadData()
     }
 
@@ -183,33 +183,32 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         var people = [Person]()
         
-        if self.checkForFile(filePath) == true
+//        if self.checkForFile(filePath) == true
+//        {
+//            println("USING Unarchived Object")
+//            return NSKeyedUnarchiver.unarchiveObjectWithFile(filePath) as [Person]
+//        }
+        
+       
+        for name in rosterArray
         {
-            println("USING Unarchived Object")
-            return NSKeyedUnarchiver.unarchiveObjectWithFile(filePath) as [Person]
-        }
-            
-        else
-        {
-            for name in rosterArray
+            var newPerson:Person = Person(studentId: name["id"] as String, firstName: name["firstName"] as String, lastName: name["lastName"] as String, role: name["role"] as String)
+            if newPerson.role == "teacher"
             {
-                var newPerson:Person = Person(studentId: name["id"] as String, firstName: name["firstName"] as String, lastName: name["lastName"] as String, role: name["role"] as String)
-                if newPerson.role == "teacher"
-                {
-                    newPerson.image = UIImage(named: "blank-darth-vader")
-                }
-                else
-                {
-                    newPerson.image = UIImage(named: "blank-storm-trooper")
-                }
-                people.append(newPerson)
+                newPerson.image = UIImage(named: "blank-darth-vader")
             }
-            println("Creating list")
-            println(people)
-            self.saveFile(people, fileName: filePath)
-
-            return people
+            else
+            {
+                newPerson.image = UIImage(named: "blank-storm-trooper")
+            }
+            people.append(newPerson)
         }
+//        println("Creating list")
+//        println(people)
+//        self.saveFile(people, fileName: filePath)
+
+        return people
+        
         
         
     

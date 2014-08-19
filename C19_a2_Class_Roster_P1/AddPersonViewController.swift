@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddPersonViewController: UIViewController, UITextFieldDelegate {
+class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     var newPerson = Person(studentId: "", firstName: "", lastName: "", role: "")
     
@@ -51,6 +51,49 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate {
         self.view.endEditing(true)
     }
     
+    //MARK: #Camera Methods
+    func presentCamera()
+    {
+        // Check for the camera device
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
+        {
+            println("YES")
+            var cameraUI = UIImagePickerController()
+            cameraUI.delegate = self
+            cameraUI.sourceType = UIImagePickerControllerSourceType.Camera
+            
+            // If true you can pinch and zoom to make a diffrent image
+            cameraUI.allowsEditing = true
+            // Pops the camera UI on screen
+            self.presentViewController(cameraUI, animated: true, completion: nil)
+        }
+        else
+        {
+            var alert = UIAlertView()
+            alert.title = "No Device"
+            alert.message = "Your device does not have the proper camera"
+            alert.addButtonWithTitle("OK")
+            alert.show()
+        }
+        
+        
+    }
+    
+    func imagePickerController(picker: UIImagePickerController!, didFinishPickingMediaWithInfo info: NSDictionary!)
+    {
+        // Image var to save the user taken image
+        var imageToSave:UIImage?
+        
+        
+        imageToSave = info.objectForKey(UIImagePickerControllerEditedImage) as? UIImage
+        
+        // Saves the image
+        UIImageWriteToSavedPhotosAlbum(imageToSave, nil, nil, nil)
+        self.profileImage.image = imageToSave
+        // Dismisss the camera View Controller
+        self.dismissViewControllerAnimated(true, completion: { () -> Void in})
+    }
+    
     @IBAction func firstNameTextFieldChanged(sender: AnyObject)
     {
         //self.newPerson.firstName = self.firstNameTextField.text
@@ -70,6 +113,10 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate {
         //self.newPerson.role = self.roleTextField.text
     }
     
+    @IBAction func imageViewPressed(sender: AnyObject)
+    {
+        self.presentCamera()
+    }
     func createPerson() -> Person
     {
         return Person(studentId: self.idNumberTextField.text, firstName: self.firstNameTextField.text, lastName: self.lastNameTextField.text, role: self.roleTextField.text)
