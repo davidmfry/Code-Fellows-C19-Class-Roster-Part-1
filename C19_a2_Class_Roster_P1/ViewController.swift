@@ -47,8 +47,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewWillAppear(animated: Bool)
     {
         // Reloads the tabelView after it comes back from the DetailViewController
-        //println(newPerson?.firstName)
-        //println(self.testNum)
+        NSKeyedArchiver.archiveRootObject(self.personArray, toFile: "personListArray")
         self.appTableView.reloadData()
     }
 
@@ -167,6 +166,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // is initalized with an Id number, First name and Last name.
         
         var people = [Person]()
+        
+        
+        
 
         for name in rosterArray
         {

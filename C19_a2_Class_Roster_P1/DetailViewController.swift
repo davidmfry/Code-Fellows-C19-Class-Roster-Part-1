@@ -115,7 +115,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         // Image var to save the user taken image
         var imageToSave:UIImage?
         
-        //
+        
         imageToSave = info.objectForKey(UIImagePickerControllerEditedImage) as? UIImage
         
         // Saves the image

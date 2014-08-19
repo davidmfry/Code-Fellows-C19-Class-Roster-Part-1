@@ -11,7 +11,6 @@ import UIKit
 class AddPersonViewController: UIViewController, UITextFieldDelegate {
 
     var newPerson = Person(studentId: "", firstName: "", lastName: "", role: "")
-    var testNum = 10
     
     @IBOutlet var firstNameTextField: UITextField!
     @IBOutlet var lastNameTextField: UITextField!
@@ -30,15 +29,6 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate {
        
     }
 
-    override func viewWillDisappear(animated: Bool)
-    {
-//        println("disappered")
-//        self.newPerson.firstName = self.firstNameTextField.text
-//        self.newPerson.lastName = self.lastNameTextField.text
-//        self.newPerson.studentId = self.idNumberTextField.text
-//        self.newPerson.role = self.roleTextField.text
-//        
-    }
   
     
     override func didReceiveMemoryWarning()
@@ -85,14 +75,6 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate {
         return Person(studentId: self.idNumberTextField.text, firstName: self.firstNameTextField.text, lastName: self.lastNameTextField.text, role: self.roleTextField.text)
     }
     
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
