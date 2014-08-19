@@ -59,6 +59,7 @@ class Person: NSObject, NSCoding
     
     required init(coder aDecoder: NSCoder!)
     {
+        
         self.studentId = aDecoder.decodeObjectForKey("studentId") as String
         self.firstName = aDecoder.decodeObjectForKey("firstName") as String
         self.lastName = aDecoder.decodeObjectForKey("lastName") as String

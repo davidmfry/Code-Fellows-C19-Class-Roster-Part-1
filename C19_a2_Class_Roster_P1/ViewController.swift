@@ -22,6 +22,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var cellIdentifier = "myCell"           // Name for the cell in the table view
     var numberOfSection = 2
     
+    var filePath: String?
+    var fileName = "peopleList.plist"
+    
     
     @IBOutlet var appTableView: UITableView!
     // Getting the path to the plist files. The plist contains an Array<Dictionary>
@@ -29,17 +32,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let teacherPlistPath = NSBundle.mainBundle().pathForResource("teacherRoster", ofType: "plist")
     
     
-    
+//MARK: #Life Cycle Methods
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
+        self.filePath = self.findPaths(fileName)
         // student and teacher roster is the plist variable wich can be opperated on.  It's an NSArray
         let studentRoster = NSArray(contentsOfFile: self.studentPlistPath)
         let teacherRoster = NSArray(contentsOfFile: self.teacherPlistPath)
         
         self.personArray = makePeopleArray(studentRoster)
-        self.teacherArray = makePeopleArray(teacherRoster)
+        //self.teacherArray = makePeopleArray(teacherRoster)
+        
+        //self.findPaths()
         
         
     }
@@ -47,11 +52,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewWillAppear(animated: Bool)
     {
         // Reloads the tabelView after it comes back from the DetailViewController
-        NSKeyedArchiver.archiveRootObject(self.personArray, toFile: "personListArray")
+        self.saveFile(self.personArray, fileName: self.filePath!)
         self.appTableView.reloadData()
     }
 
-    
+//MARK: #TableView Methods
     func numberOfSectionsInTableView(tableView: UITableView!) -> Int
     {
         return numberOfSection
@@ -90,6 +95,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as UITableViewCell
         
+        // Makes the profile images rounded
+        cell.imageView.layer.masksToBounds = true
+        cell.imageView.layer.cornerRadius = 20.0
+        
         // Student cell information
         if indexPath.section == 0
         {
@@ -111,7 +120,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
 
     }
-    
+//MARK:  #Navagation Methods
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!)
     {
         if segue.identifier == "segueToDetailView"
@@ -159,7 +168,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
-    
+//MARK: #Custom Methods
     func makePeopleArray(rosterArray: NSArray) -> Array<Person>
     {
         // This function takes in an Array<dictionary>.  The Creats an Array<Person> and each person object
@@ -167,25 +176,78 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         var people = [Person]()
         
-        
-        
-
-        for name in rosterArray
+        if self.checkForFile(self.filePath!) == true
         {
-            var newPerson:Person = Person(studentId: name["id"] as String, firstName: name["firstName"] as String, lastName: name["lastName"] as String, role: name["role"] as String)
-            if newPerson.role == "teacher"
+            println("USING Unarchived Object")
+            return NSKeyedUnarchiver.unarchiveObjectWithFile(filePath) as [Person]
+        }
+            
+        else
+        {
+            for name in rosterArray
             {
-                newPerson.image = UIImage(named: "blank-darth-vader")
+                var newPerson:Person = Person(studentId: name["id"] as String, firstName: name["firstName"] as String, lastName: name["lastName"] as String, role: name["role"] as String)
+                if newPerson.role == "teacher"
+                {
+                    newPerson.image = UIImage(named: "blank-darth-vader")
+                }
+                else
+                {
+                    newPerson.image = UIImage(named: "blank-storm-trooper")
+                }
+                people.append(newPerson)
             }
-            else
-            {
-                newPerson.image = UIImage(named: "blank-storm-trooper")
-            }
-            people.append(newPerson)
+            println("Creating list")
+            println(people)
+            self.saveFile(people, fileName: self.filePath!)
+
+            return people
         }
         
-        return people
+        
     
+    }
+    
+    func findPaths(fileName: String) -> String
+    {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let documentDirectory = paths[0] as String
+        let myFilePath = documentDirectory.stringByAppendingPathComponent(fileName)
+        
+        //println("PATHS \(paths)")
+        //println("Doc Dir \(documentDirectory)")
+        println("MY FILE PATH: \(myFilePath)")
+        
+        return myFilePath
+        
+    }
+    
+    func checkForFile(path:String) -> Bool
+    {
+        let manager = NSFileManager.defaultManager()
+        
+        if(manager.fileExistsAtPath(path))
+        {
+            println("YOUR FILE IS HERE!!!!")
+            return true
+        }
+        else
+        {
+            println("YOUR FILE IS NOT HERE!!!!")
+            return false
+        }
+    }
+    
+    func saveFile(objectToSave:AnyObject,  fileName:String)
+    {
+        if NSKeyedArchiver.archiveRootObject(objectToSave, toFile: fileName)
+        {
+            println("File has been save.")
+        }
+        else
+        {
+            println("File has not been saved!")
+        }
     }
     
 

@@ -48,7 +48,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         // Dispose of any resources that can be recreated.
     }
     
-    
+//MARK: #IBActions
     @IBAction func firstNameTextFieldChange(sender: AnyObject)
     {
         self.selectedPerson?.firstName = self.firstNameTextField.text
@@ -68,6 +68,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     {
         self.presentCamera()
     }
+//MARK: #Keyboard Dismiss
     func textFieldShouldReturn(textField:UITextField!) -> Bool
     {
         // Dissmiss the keyboard when the return button is pressed
@@ -82,7 +83,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     }
 
     
-  
+//MARK: #Camera Methods
     func presentCamera()
     {
         // Check for the camera device
