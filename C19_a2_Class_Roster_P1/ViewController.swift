@@ -17,13 +17,15 @@ import Foundation
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
 {
     
-    var personArray = [Person]()            // An array to hold off the student objects after they are created by makePeopleArray
-    var teacherArray = [Person]()           // An array that holds teacher objects
-    var cellIdentifier = "myCell"           // Name for the cell in the table view
-    var numberOfSection = 2
+    var personArray = [Person]()                    // An array to hold off the student objects after they are created by makePeopleArray
+    var teacherArray = [Person]()                   // An array that holds teacher objects
+    var cellIdentifier = "myCell"                   // Name for the cell in the table view
+    var numberOfSection = 2                         // Number of section for the table view
     
-    var filePath: String?
-    var fileName = "peopleList.plist"
+    var studentFilePath: String?                    // File path to store the acrhived file for the students array
+    var teacherFilePath: String?                    // File path to store the acrhived file for the teachers array
+    var studentFileName = "studentList.plist"       // Name for the students array file
+    var teacherFileName = "teacherList.plist"       // Name for the teachers array file
     
     
     @IBOutlet var appTableView: UITableView!
@@ -36,13 +38,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.filePath = self.findPaths(fileName)
+        // Get the file paths for archiving and unarchiving
+        self.studentFilePath = self.findPaths(studentFileName)
+        self.teacherFilePath = self.findPaths(teacherFileName)
+        
         // student and teacher roster is the plist variable wich can be opperated on.  It's an NSArray
         let studentRoster = NSArray(contentsOfFile: self.studentPlistPath)
         let teacherRoster = NSArray(contentsOfFile: self.teacherPlistPath)
         
-        self.personArray = makePeopleArray(studentRoster)
-        //self.teacherArray = makePeopleArray(teacherRoster)
+        // Creates the student and teacher array, but also Unarchives the objects if they are saved
+        self.personArray = makePeopleArray(studentRoster, filePath:self.studentFilePath!)
+        self.teacherArray = makePeopleArray(teacherRoster, filePath:self.teacherFilePath!)
         
         //self.findPaths()
         
@@ -52,7 +58,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewWillAppear(animated: Bool)
     {
         // Reloads the tabelView after it comes back from the DetailViewController
-        self.saveFile(self.personArray, fileName: self.filePath!)
+        self.saveFile(self.personArray, fileName: self.studentFilePath!)
+        self.saveFile(self.teacherArray, fileName: self.teacherFilePath!)
         self.appTableView.reloadData()
     }
 
@@ -169,14 +176,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
 //MARK: #Custom Methods
-    func makePeopleArray(rosterArray: NSArray) -> Array<Person>
+    func makePeopleArray(rosterArray: NSArray, filePath:String) -> Array<Person>
     {
         // This function takes in an Array<dictionary>.  The Creats an Array<Person> and each person object
         // is initalized with an Id number, First name and Last name.
         
         var people = [Person]()
         
-        if self.checkForFile(self.filePath!) == true
+        if self.checkForFile(filePath) == true
         {
             println("USING Unarchived Object")
             return NSKeyedUnarchiver.unarchiveObjectWithFile(filePath) as [Person]
@@ -199,7 +206,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
             println("Creating list")
             println(people)
-            self.saveFile(people, fileName: self.filePath!)
+            self.saveFile(people, fileName: filePath)
 
             return people
         }
@@ -207,15 +214,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     
     }
-    
+//Mark: #File Methods
     func findPaths(fileName: String) -> String
     {
+        // an array of paths
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        // gets the first item at index 0
         let documentDirectory = paths[0] as String
+        // appends the file name on to the end of the path
         let myFilePath = documentDirectory.stringByAppendingPathComponent(fileName)
         
-        //println("PATHS \(paths)")
-        //println("Doc Dir \(documentDirectory)")
         println("MY FILE PATH: \(myFilePath)")
         
         return myFilePath
@@ -224,8 +232,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func checkForFile(path:String) -> Bool
     {
+        // This methods checks the file system to see if the give filname and path exisits
+        
+        // Allows you examine the contents of the file system and make changes to it.
         let manager = NSFileManager.defaultManager()
         
+        // Check to see if the file name is in that path or not
         if(manager.fileExistsAtPath(path))
         {
             println("YOUR FILE IS HERE!!!!")
@@ -240,6 +252,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func saveFile(objectToSave:AnyObject,  fileName:String)
     {
+        // Saves the give object in the directory with the name of the file
+        
         if NSKeyedArchiver.archiveRootObject(objectToSave, toFile: fileName)
         {
             println("File has been save.")
