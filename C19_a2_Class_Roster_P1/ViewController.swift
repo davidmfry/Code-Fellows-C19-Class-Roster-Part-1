@@ -167,7 +167,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // is initalized with an Id number, First name and Last name.
         
         var people = [Person]()
-        
+
         for name in rosterArray
         {
             var newPerson:Person = Person(studentId: name["id"] as String, firstName: name["firstName"] as String, lastName: name["lastName"] as String, role: name["role"] as String)
