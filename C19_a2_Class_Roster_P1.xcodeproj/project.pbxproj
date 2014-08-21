@@ -17,6 +17,7 @@
 		ED5AB4841991224100D05880 /* C19_a2_Class_Roster_P1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AB4831991224100D05880 /* C19_a2_Class_Roster_P1Tests.swift */; };
 		ED5AB48E1991226700D05880 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AB48D1991226700D05880 /* Person.swift */; };
 		ED7F82CE1991980D00E6F125 /* roster.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7F82CD1991980D00E6F125 /* roster.json */; };
+		ED8B439C19A642CC00B93ECE /* TestStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED8B439B19A642CC00B93ECE /* TestStoryboard.storyboard */; };
 		EDA92572199D03D4009EBA9B /* teacherRoster.plist in Resources */ = {isa = PBXBuildFile; fileRef = EDA92571199D03D4009EBA9B /* teacherRoster.plist */; };
 		EDA92574199D60C5009EBA9B /* AddPersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA92573199D60C5009EBA9B /* AddPersonViewController.swift */; };
 /* End PBXBuildFile section */
@@ -46,6 +47,7 @@
 		ED5AB4831991224100D05880 /* C19_a2_Class_Roster_P1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C19_a2_Class_Roster_P1Tests.swift; sourceTree = "<group>"; };
 		ED5AB48D1991226700D05880 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Person.swift; path = ../Person.swift; sourceTree = "<group>"; };
 		ED7F82CD1991980D00E6F125 /* roster.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = roster.json; sourceTree = SOURCE_ROOT; };
+		ED8B439B19A642CC00B93ECE /* TestStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TestStoryboard.storyboard; sourceTree = "<group>"; };
 		EDA92571199D03D4009EBA9B /* teacherRoster.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = teacherRoster.plist; sourceTree = "<group>"; };
 		EDA92573199D60C5009EBA9B /* AddPersonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPersonViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -95,6 +97,7 @@
 				ED21E30E199AC1410092B1DB /* DetailViewController.swift */,
 				EDA92573199D60C5009EBA9B /* AddPersonViewController.swift */,
 				ED5AB4741991224100D05880 /* Main.storyboard */,
+				ED8B439B19A642CC00B93ECE /* TestStoryboard.storyboard */,
 				ED5AB4771991224100D05880 /* Images.xcassets */,
 				ED5AB46F1991224100D05880 /* C19_a2_Class_Roster_P1.xcdatamodeld */,
 				ED7F82CD1991980D00E6F125 /* roster.json */,
@@ -213,6 +216,7 @@
 				ED7F82CE1991980D00E6F125 /* roster.json in Resources */,
 				ED5AB4761991224100D05880 /* Main.storyboard in Resources */,
 				ED5AB4781991224100D05880 /* Images.xcassets in Resources */,
+				ED8B439C19A642CC00B93ECE /* TestStoryboard.storyboard in Resources */,
 				ED5607061993DB2A00B58D6B /* studentRoster.plist in Resources */,
 				EDA92572199D03D4009EBA9B /* teacherRoster.plist in Resources */,
 			);
@@ -356,6 +360,7 @@
 				INFOPLIST_FILE = C19_a2_Class_Roster_P1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -367,6 +372,7 @@
 				INFOPLIST_FILE = C19_a2_Class_Roster_P1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
