@@ -51,7 +51,7 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePic
         self.view.endEditing(true)
     }
     
-    //MARK: #Camera Methods
+//MARK: #Camera Methods
     func presentCamera()
     {
         // Check for the camera device
@@ -69,6 +69,7 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePic
         }
         else
         {
+            // Alert show if there device does not have the device
             var alert = UIAlertView()
             alert.title = "No Device"
             alert.message = "Your device does not have the proper camera"
@@ -94,29 +95,13 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePic
         self.dismissViewControllerAnimated(true, completion: { () -> Void in})
     }
     
-    @IBAction func firstNameTextFieldChanged(sender: AnyObject)
-    {
-        //self.newPerson.firstName = self.firstNameTextField.text
-    }
-    @IBAction func lastNameTextFieldChanged(sender: AnyObject)
-    {
-        //self.newPerson.lastName = self.lastNameTextField.text
-    }
-
-    @IBAction func idTextFieldChanged(sender: AnyObject)
-    {
-        //self.newPerson.studentId = self.idNumberTextField.text
-    }
-
-    @IBAction func roleTextFieldChanged(sender: AnyObject)
-    {
-        //self.newPerson.role = self.roleTextField.text
-    }
     
     @IBAction func imageViewPressed(sender: AnyObject)
     {
         self.presentCamera()
     }
+    
+//MARK: Adding a new Person
     func createPerson() -> Person
     {
         return Person(studentId: self.idNumberTextField.text, firstName: self.firstNameTextField.text, lastName: self.lastNameTextField.text, role: self.roleTextField.text)

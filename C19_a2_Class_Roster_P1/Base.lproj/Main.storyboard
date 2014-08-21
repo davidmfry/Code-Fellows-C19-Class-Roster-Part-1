@@ -87,33 +87,21 @@
                                 <rect key="frame" x="16" y="199" width="288" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="firstNameTextFieldChanged:" destination="T5A-9p-USA" eventType="editingDidEnd" id="UTV-7F-UCf"/>
-                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nFu-2t-quk">
                                 <rect key="frame" x="16" y="237" width="288" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="lastNameTextFieldChanged:" destination="T5A-9p-USA" eventType="editingDidEnd" id="5iw-E1-9TK"/>
-                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Id Number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QHc-8Y-pO6">
                                 <rect key="frame" x="16" y="275" width="288" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="idTextFieldChanged:" destination="T5A-9p-USA" eventType="editingDidEnd" id="etv-Vp-iJh"/>
-                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="student or teacher" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X90-hx-JD4">
                                 <rect key="frame" x="16" y="313" width="288" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="roleTextFieldChanged:" destination="T5A-9p-USA" eventType="editingDidEnd" id="P8Q-be-0AI"/>
-                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eMg-f2-3BV">
                                 <rect key="frame" x="16" y="351" width="288" height="30"/>
@@ -178,17 +166,11 @@
                                 <rect key="frame" x="28" y="321" width="265" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="firstNameTextFieldChange:" destination="qPi-hE-VNX" eventType="editingDidEnd" id="mgK-Q5-Ddh"/>
-                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PCt-CV-5nk">
                                 <rect key="frame" x="28" y="359" width="265" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="lastNameTextFieldChanged:" destination="qPi-hE-VNX" eventType="editingDidEnd" id="FRS-J7-bX1"/>
-                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N2Y-ap-3Ud">
                                 <rect key="frame" x="28" y="397" width="265" height="30"/>

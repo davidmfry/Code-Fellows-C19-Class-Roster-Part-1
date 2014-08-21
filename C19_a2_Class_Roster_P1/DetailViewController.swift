@@ -49,16 +49,6 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     }
     
 //MARK: #IBActions
-    @IBAction func firstNameTextFieldChange(sender: AnyObject)
-    {
-        self.selectedPerson?.firstName = self.firstNameTextField.text
-    }
-    
-    @IBAction func lastNameTextFieldChanged(sender: AnyObject)
-    {
-        self.selectedPerson?.lastName = self.lastNameTextField.text
-    }
-    
     @IBAction func tapedTheProfileImage(sender: AnyObject)
     {
         self.presentCamera()
@@ -81,18 +71,21 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         // Dissmiss the keyboard when the view is touched
         self.view.endEditing(true)
     }
-
     
+    func textFieldDidEndEditing(textField: UITextField!) {
+        self.selectedPerson?.firstName = self.firstNameTextField.text
+        self.selectedPerson?.lastName = self.lastNameTextField.text
+    }
 //MARK: #Camera Methods
     func presentCamera()
     {
         // Check for the camera device
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary)
         {
             println("YES")
             var cameraUI = UIImagePickerController()
             cameraUI.delegate = self
-            cameraUI.sourceType = UIImagePickerControllerSourceType.Camera
+            cameraUI.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
             
             // If true you can pinch and zoom to make a diffrent image
             cameraUI.allowsEditing = true
@@ -111,19 +104,24 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         
     }
     
-    func imagePickerController(picker: UIImagePickerController!, didFinishPickingMediaWithInfo info: NSDictionary!)
+    func imagePickerController(picker: UIImagePickerController!, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]!)
     {
         // Image var to save the user taken image
         var imageToSave:UIImage?
         
         
-        imageToSave = info.objectForKey(UIImagePickerControllerEditedImage) as? UIImage
+        imageToSave = info[UIImagePickerControllerEditedImage] as? UIImage
         
         // Saves the image
         UIImageWriteToSavedPhotosAlbum(imageToSave, nil, nil, nil)
         self.savedPic = imageToSave
         // Dismisss the camera View Controller
-        self.dismissViewControllerAnimated(true, completion: { () -> Void in})
+        self.dismissViewControllerAnimated(true, nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController!)
+    {
+        picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
 
