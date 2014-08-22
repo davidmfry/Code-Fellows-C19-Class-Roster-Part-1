@@ -7,16 +7,29 @@
 //
 
 import UIKit
+import CoreData
 
 class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    var newPerson = Person(studentId: "", firstName: "", lastName: "", role: "")
+    // Entity Names
+    let STUDENT_ENTITY = "Students"
+    let TEACHER_ENTITY = "Teachers"
+    
+    // Entity Keys
+    let FIRST_NAME_KEY = "firstName"
+    let LAST_NAME_KEY = "lastName"
+    let STUDENT_ID_KEY = "studentID"
+    let ROLE_KEY = "role"
+    let IMAGE_KEY = "image"
+    
     
     @IBOutlet var firstNameTextField: UITextField!
     @IBOutlet var lastNameTextField: UITextField!
     @IBOutlet var idNumberTextField: UITextField!
     @IBOutlet var roleTextField: UITextField!
     @IBOutlet var profileImage: UIImageView!
+    
+    var savedPic: NSData?
     
     override func viewDidLoad()
     {
@@ -28,7 +41,11 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePic
         self.profileImage.image = UIImage(named: "blank-carbon-han")
        
     }
-
+    
+    override func viewWillAppear(animated: Bool)
+    {
+    
+    }
   
     
     override func didReceiveMemoryWarning()
@@ -91,6 +108,10 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePic
         // Saves the image
         UIImageWriteToSavedPhotosAlbum(imageToSave, nil, nil, nil)
         self.profileImage.image = imageToSave
+        
+        // Data from the saved imaged
+        self.savedPic = UIImageJPEGRepresentation(imageToSave, 1.0)
+        
         // Dismisss the camera View Controller
         self.dismissViewControllerAnimated(true, completion: { () -> Void in})
     }
@@ -101,10 +122,52 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePic
         self.presentCamera()
     }
     
-//MARK: Adding a new Person
-    func createPerson() -> Person
+    @IBAction func finishedButtonPressed(sender: AnyObject)
     {
-        return Person(studentId: self.idNumberTextField.text, firstName: self.firstNameTextField.text, lastName: self.lastNameTextField.text, role: self.roleTextField.text)
+        self.createPerson(self.STUDENT_ENTITY)
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+//MARK: Adding a new Person
+    func createPerson(entityName: String)
+    {
+        // Reference to our app delegate
+        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        
+        // Reference managed object context
+        let context: NSManagedObjectContext = appDel.managedObjectContext!
+        
+        // Name of the entity in the Core Data db and tells the app to use the entity created in the DB
+        let entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
+        
+        var newPerson = CoreDBModelPerson(entity: entity, insertIntoManagedObjectContext: context)
+        newPerson.firstName = firstNameTextField.text
+        newPerson.lastName  = lastNameTextField.text
+        newPerson.studentID = idNumberTextField.text
+        newPerson.role      = roleTextField.text
+        newPerson.image = UIImagePNGRepresentation(self.profileImage.image)
+        
+        context.save(nil)
+    }
+    
+    
+    func editItem(entityName: String, existingItem: NSManagedObject, keyForValueToChange:String, value:AnyObject)
+    {
+        // Reference to our app delegate
+        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        
+        // Reference managed object context
+        let context: NSManagedObjectContext = appDel.managedObjectContext!
+        
+        // Name of the entity in the Core Data db and tells the app to use the entity created in the DB
+        let entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
+        existingItem.setValue(value, forKey: keyForValueToChange)
+        
+        var error: NSError?
+        
+        context.save(&error)
+        
     }
     
 

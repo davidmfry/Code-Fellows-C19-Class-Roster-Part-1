@@ -13,14 +13,14 @@
 
 import UIKit
 import Foundation
+import CoreData
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
 {
     
-    var personArray = [Person]()                    // An array to hold off the student objects after they are created by makePeopleArray
+    var studentArray = [AnyObject]()                // An array to hold off the student objects after they are created by makePeopleArray
     var teacherArray = [Person]()                   // An array that holds teacher objects
-    var cellIdentifier = "myCell"                   // Name for the cell in the table view
-    var numberOfSection = 2                         // Number of section for the table view
+    var numberOfSection = 1                        // Number of section for the table view
     
     var studentFilePath: String?                    // File path to store the acrhived file for the students array
     var teacherFilePath: String?                    // File path to store the acrhived file for the teachers array
@@ -29,37 +29,69 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     @IBOutlet var appTableView: UITableView!
+    
     // Getting the path to the plist files. The plist contains an Array<Dictionary>
     let studentPlistPath = NSBundle.mainBundle().pathForResource("studentRoster", ofType: "plist")
     let teacherPlistPath = NSBundle.mainBundle().pathForResource("teacherRoster", ofType: "plist")
+    
+    // User Defaults
+    let standardDefaults = NSUserDefaults.standardUserDefaults()
+    
+    // Entity Names
+    let STUDENT_ENTITY = "Students"
+    let TEACHER_ENTITY = "Teachers"
+    
+    // Entity Keys
+    let FIRST_NAME_KEY = "firstName"
+    let LAST_NAME_KEY = "lastName"
+    let STUDENT_ID_KEY = "studentID"
+    let ROLE_KEY = "role"
+    let IMAGE_KEY = "image"
     
     
 //MARK: #Life Cycle Methods
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        // Get the file paths for archiving and unarchiving
-        self.studentFilePath = self.findPaths(studentFileName)
-        self.teacherFilePath = self.findPaths(teacherFileName)
         
+        // used to creating the DB once from the plist
+        var firstAppRun = self.standardDefaults.integerForKey("firstAppRun")
+        
+
+        
+        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let contex: NSManagedObjectContext = appDel.managedObjectContext!
+    
         // student and teacher roster is the plist variable wich can be opperated on.  It's an NSArray
         let studentRoster = NSArray(contentsOfFile: self.studentPlistPath)
         let teacherRoster = NSArray(contentsOfFile: self.teacherPlistPath)
         
-        // Creates the student and teacher array, but also Unarchives the objects if they are saved
-        self.personArray = makePeopleArray(studentRoster, filePath:self.studentFilePath!)
-        self.teacherArray = makePeopleArray(teacherRoster, filePath:self.teacherFilePath!)
+        if firstAppRun == 0
+        {
+            // Make people data model
+            self.makePeople(studentRoster, entityName: self.STUDENT_ENTITY)
+            self.makePeople(teacherRoster, entityName: self.TEACHER_ENTITY)
+        }
         
-        //self.findPaths()
+
+        
+        let getStudentList = NSFetchRequest(entityName: self.STUDENT_ENTITY)
+        
+        self.studentArray = contex.executeFetchRequest(getStudentList, error: nil)
+        
+        
+     
         
         
     }
     
     override func viewWillAppear(animated: Bool)
     {
-        // Reloads the tabelView after it comes back from the DetailViewController
-        //self.saveFile(self.personArray, fileName: self.studentFilePath!)
-        //self.saveFile(self.teacherArray, fileName: self.teacherFilePath!)
+        // Reloads the tabelView after it comes back from any other viewController
+        
+        //Sets the firstAppRun to 1 so it does not create the DB again after the app closes
+        standardDefaults.setInteger(1, forKey: "firstAppRun")
+        
         self.appTableView.reloadData()
     }
 
@@ -71,16 +103,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int
     {
-        // Student section
-        if section == 0
-        {
-            return personArray.count
-        }
-        // Teacher section
-        else
-        {
-            return teacherArray.count
-        }
+        return self.studentArray.count
+//        // Student section
+//        if section == 0
+//        {
+//            return personArray.count
+//        }
+//        // Teacher section
+//        else
+//        {
+//            return teacherArray.count
+//        }
     }
     
     func tableView(tableView: UITableView!, titleForHeaderInSection section: Int) -> String!
@@ -100,31 +133,46 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell!
     {
+        var cellIdentifier = "myCell"                   // Name for the cell in the table view
+        
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as UITableViewCell
         
         // Makes the profile images rounded
         cell.imageView.layer.masksToBounds = true
         cell.imageView.layer.cornerRadius = 20.0
         
-        // Student cell information
-        if indexPath.section == 0
-        {
+        var data = self.studentArray[indexPath.row] as NSManagedObject
         
-            cell.textLabel.text = personArray[indexPath.row].fullName(false)
-            cell.detailTextLabel.text = personArray[indexPath.row].studentId
-            cell.imageView.image = personArray[indexPath.row].image
-            return cell
-        }
-        // Teacher cell infromation
-        else
-        {
-            cell.textLabel.text = teacherArray[indexPath.row].fullName(false)
-            cell.detailTextLabel.text = teacherArray[indexPath.row].studentId
-            cell.imageView.image = teacherArray[indexPath.row].image
-            return cell
-        }
-    
-    
+        var studentImage = data.valueForKey(self.IMAGE_KEY) as NSData
+        
+        cell.textLabel.text = "\(data.valueForKey(self.FIRST_NAME_KEY)) \(data.valueForKey(self.LAST_NAME_KEY))"
+        cell.detailTextLabel.text = data.valueForKey(self.STUDENT_ID_KEY) as String
+        cell.imageView.image = UIImage(data: studentImage) as UIImage
+        
+        
+
+        
+
+//
+//        // Student cell information
+//        if indexPath.section == 0
+//        {
+//        
+//            cell.textLabel.text = personArray[indexPath.row].fullName(false)
+//            cell.detailTextLabel.text = personArray[indexPath.row].studentId
+//            cell.imageView.image = personArray[indexPath.row].image
+//            return cell
+//        }
+//        // Teacher cell infromation
+//        else
+//        {
+//            cell.textLabel.text = teacherArray[indexPath.row].fullName(false)
+//            cell.detailTextLabel.text = teacherArray[indexPath.row].studentId
+//            cell.imageView.image = teacherArray[indexPath.row].image
+//            return cell
+//        }
+        
+        return cell
 
     }
 //MARK:  #Navagation Methods
@@ -134,133 +182,98 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         {
             var detailViewController = segue.destinationViewController as DetailViewController
             var personIndex = appTableView.indexPathForSelectedRow().row
-            var selectedPerson: Person?
+            var selectedPerson: NSManagedObject
             
             // Checks to see what type of person objects is going to passed in the segue.  Its
             // Either a student or teacher person object
             
             if appTableView.indexPathForSelectedRow().section == 0
             {
-                selectedPerson = self.personArray[personIndex]
+                selectedPerson = self.studentArray[personIndex] as NSManagedObject
+                // Passes the person managed object by referance to the detailViewController
+                detailViewController.firstName = selectedPerson.valueForKey(self.FIRST_NAME_KEY) as String
+                detailViewController.lastName = selectedPerson.valueForKey(self.LAST_NAME_KEY) as String
+                detailViewController.image = selectedPerson.valueForKey(self.IMAGE_KEY) as? NSData
+                detailViewController.selectedPerson = selectedPerson
             }
             
             else
             {
-                selectedPerson = self.teacherArray[personIndex]
+//                selectedPerson = self.teacherArray[personIndex]
             }
-            // Passes the person object by referance to the detailViewController
-            detailViewController.selectedPerson = selectedPerson
+            
+            
         }
         
     
         
     }
     
-    @IBAction func exitToRootViewController(segue: UIStoryboardSegue)
-    {
-        var sourceViewController = segue.sourceViewController as AddPersonViewController
-        
-        var newPerson = Person(studentId: sourceViewController.idNumberTextField.text, firstName: sourceViewController.firstNameTextField.text, lastName: sourceViewController.lastNameTextField.text, role: sourceViewController.roleTextField.text)
-        newPerson.image = sourceViewController.profileImage.image
-        
-        if newPerson.role == "teacher"
-        {
-            self.teacherArray.append(newPerson)
-        }
-        else if newPerson.role == "student"
-        {
-            self.personArray.append(newPerson)
-        }
-        
-        
-    }
+//    @IBAction func exitToRootViewController(segue: UIStoryboardSegue)
+//    {
+//        var sourceViewController = segue.sourceViewController as AddPersonViewController
+//        
+//        var newPerson = Person(studentId: sourceViewController.idNumberTextField.text, firstName: sourceViewController.firstNameTextField.text, lastName: sourceViewController.lastNameTextField.text, role: sourceViewController.roleTextField.text)
+//        newPerson.image = sourceViewController.profileImage.image
+//        
+//        if newPerson.role == "teacher"
+//        {
+//            self.teacherArray.append(newPerson)
+//        }
+//        else if newPerson.role == "student"
+//        {
+//            self.personArray.append(newPerson)
+//        }
+//        
+//        
+//    }
     
 //MARK: #Custom Methods
-    func makePeopleArray(rosterArray: NSArray, filePath:String) -> Array<Person>
+    func makePeople(rosterArray: NSArray, entityName:String)
     {
         // This function takes in an Array<dictionary>.  The Creats an Array<Person> and each person object
         // is initalized with an Id number, First name and Last name.
         
-        var people = [Person]()
+        // Reference to our app delegate
+        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         
-//        if self.checkForFile(filePath) == true
-//        {
-//            println("USING Unarchived Object")
-//            return NSKeyedUnarchiver.unarchiveObjectWithFile(filePath) as [Person]
-//        }
+        // Reference managed object context
+        let context: NSManagedObjectContext = appDel.managedObjectContext!
+        
+        // Name of the entity in the Core Data db and tells the app to use the entity created in the DB
+        let entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
+        
+        // Data for the default profile pictures
+        var blankStudentImageData = UIImagePNGRepresentation(UIImage(named: "blank-storm-trooper"))
+        var blankTeacherImageData = UIImagePNGRepresentation(UIImage(named: "blank-darth-vader"))
         
        
         for name in rosterArray
         {
-            var newPerson:Person = Person(studentId: name["id"] as String, firstName: name["firstName"] as String, lastName: name["lastName"] as String, role: name["role"] as String)
+            // Create instance of CoreDBModelPerson data model and initialize
+            var newPerson = CoreDBModelPerson(entity: entity, insertIntoManagedObjectContext: context)
+            
+            // Mapping the properties from the plist
+            newPerson.studentID = name["id"] as String
+            newPerson.firstName = name["firstName"] as String
+            newPerson.lastName = name["lastName"] as String
+            newPerson.role = name["role"] as String
+            
+            // Adding the proper image to the student or teacher
             if newPerson.role == "teacher"
             {
-                newPerson.image = UIImage(named: "blank-darth-vader")
+                newPerson.image = blankTeacherImageData
             }
+            
             else
             {
-                newPerson.image = UIImage(named: "blank-storm-trooper")
+                newPerson.image = blankStudentImageData
             }
-            people.append(newPerson)
+            
+            context.save(nil)
         }
-//        println("Creating list")
-//        println(people)
-//        self.saveFile(people, fileName: filePath)
 
-        return people
-        
-        
-        
     
-    }
-//Mark: #File Methods
-    func findPaths(fileName: String) -> String
-    {
-        // an array of paths
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        // gets the first item at index 0
-        let documentDirectory = paths[0] as String
-        // appends the file name on to the end of the path
-        let myFilePath = documentDirectory.stringByAppendingPathComponent(fileName)
-        
-        println("MY FILE PATH: \(myFilePath)")
-        
-        return myFilePath
-        
-    }
-    
-    func checkForFile(path:String) -> Bool
-    {
-        // This methods checks the file system to see if the give filname and path exisits
-        
-        // Allows you examine the contents of the file system and make changes to it.
-        let manager = NSFileManager.defaultManager()
-        
-        // Check to see if the file name is in that path or not
-        if(manager.fileExistsAtPath(path))
-        {
-            println("YOUR FILE IS HERE!!!!")
-            return true
-        }
-        else
-        {
-            println("YOUR FILE IS NOT HERE!!!!")
-            return false
-        }
-    }
-    
-    func saveFile(objectToSave:AnyObject,  fileName:String)
-    {
-        // Saves the give object in the directory with the name of the file
-        
-        if NSKeyedArchiver.archiveRootObject(objectToSave, toFile: fileName)
-        {
-            println("File has been save.")
-        }
-        else
-        {
-            println("File has not been saved!")
-        }
     }
     
 
