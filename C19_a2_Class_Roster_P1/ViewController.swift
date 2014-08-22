@@ -19,8 +19,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 {
     
     var studentArray = [AnyObject]()                // An array to hold off the student objects after they are created by makePeopleArray
-    var teacherArray = [Person]()                   // An array that holds teacher objects
-    var numberOfSection = 1                        // Number of section for the table view
+    var teacherArray = [AnyObject]()                // An array that holds teacher objects
+    var numberOfSection = 2                         // Number of section for the table view
     
     var studentFilePath: String?                    // File path to store the acrhived file for the students array
     var teacherFilePath: String?                    // File path to store the acrhived file for the teachers array
@@ -60,7 +60,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
         
         let appDel: AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-        let contex: NSManagedObjectContext = appDel.managedObjectContext!
+        let context: NSManagedObjectContext = appDel.managedObjectContext!
     
         // student and teacher roster is the plist variable wich can be opperated on.  It's an NSArray
         let studentRoster = NSArray(contentsOfFile: self.studentPlistPath)
@@ -76,10 +76,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
         
         let getStudentList = NSFetchRequest(entityName: self.STUDENT_ENTITY)
+        let getTeacherList = NSFetchRequest(entityName: self.TEACHER_ENTITY)
         
-        self.studentArray = contex.executeFetchRequest(getStudentList, error: nil)
+        self.studentArray = context.executeFetchRequest(getStudentList, error: nil)
+        self.teacherArray = context.executeFetchRequest(getTeacherList, error: nil)
         
-        
+        println("THIS IS TEACHER ARRAY!!!!!    \(self.teacherArray[0])")
      
         
         
@@ -103,17 +105,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int
     {
-        return self.studentArray.count
-//        // Student section
-//        if section == 0
-//        {
-//            return personArray.count
-//        }
-//        // Teacher section
-//        else
-//        {
-//            return teacherArray.count
-//        }
+        // Student section
+        if section == 0
+        {
+            return studentArray.count
+        }
+        // Teacher section
+        else
+        {
+            return teacherArray.count
+        }
     }
     
     func tableView(tableView: UITableView!, titleForHeaderInSection section: Int) -> String!
@@ -141,38 +142,33 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         cell.imageView.layer.masksToBounds = true
         cell.imageView.layer.cornerRadius = 20.0
         
-        var data = self.studentArray[indexPath.row] as NSManagedObject
+        // Student  Cell
+        if indexPath.section == 0
+        {
+            var data = self.studentArray[indexPath.row] as NSManagedObject
         
-        var studentImage = data.valueForKey(self.IMAGE_KEY) as NSData
+            var studentImage = data.valueForKey(self.IMAGE_KEY) as NSData
+            cell.textLabel.text = "\(data.valueForKey(self.FIRST_NAME_KEY)) \(data.valueForKey(self.LAST_NAME_KEY))"
+            cell.detailTextLabel.text = data.valueForKey(self.STUDENT_ID_KEY) as String
+            cell.imageView.image = UIImage(data: studentImage) as UIImage
+            
+            return cell
+        }
         
-        cell.textLabel.text = "\(data.valueForKey(self.FIRST_NAME_KEY)) \(data.valueForKey(self.LAST_NAME_KEY))"
-        cell.detailTextLabel.text = data.valueForKey(self.STUDENT_ID_KEY) as String
-        cell.imageView.image = UIImage(data: studentImage) as UIImage
+        // Teacher Cell
+        else
+        {
+            var data = self.teacherArray[indexPath.row] as NSManagedObject
+            var teacherImage = data.valueForKey(self.IMAGE_KEY) as NSData
+            cell.textLabel.text = "\(data.valueForKey(self.FIRST_NAME_KEY)) \(data.valueForKey(self.LAST_NAME_KEY))"
+            cell.detailTextLabel.text = data.valueForKey(self.STUDENT_ID_KEY) as String
+            cell.imageView.image = UIImage(data: teacherImage) as UIImage
+            return cell
+        }
         
         
 
         
-
-//
-//        // Student cell information
-//        if indexPath.section == 0
-//        {
-//        
-//            cell.textLabel.text = personArray[indexPath.row].fullName(false)
-//            cell.detailTextLabel.text = personArray[indexPath.row].studentId
-//            cell.imageView.image = personArray[indexPath.row].image
-//            return cell
-//        }
-//        // Teacher cell infromation
-//        else
-//        {
-//            cell.textLabel.text = teacherArray[indexPath.row].fullName(false)
-//            cell.detailTextLabel.text = teacherArray[indexPath.row].studentId
-//            cell.imageView.image = teacherArray[indexPath.row].image
-//            return cell
-//        }
-        
-        return cell
 
     }
 //MARK:  #Navagation Methods
@@ -199,7 +195,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             else
             {
-//                selectedPerson = self.teacherArray[personIndex]
+                selectedPerson = self.teacherArray[personIndex] as NSManagedObject
+                // Passes the person managed object by referance to the detailViewController
+                detailViewController.firstName = selectedPerson.valueForKey(self.FIRST_NAME_KEY) as String
+                detailViewController.lastName = selectedPerson.valueForKey(self.LAST_NAME_KEY) as String
+                detailViewController.image = selectedPerson.valueForKey(self.IMAGE_KEY) as? NSData
+                detailViewController.selectedPerson = selectedPerson
             }
             
             
