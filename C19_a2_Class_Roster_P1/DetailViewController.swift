@@ -176,9 +176,5 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         context.save(&error)
         
     }
-    
-
-    
-
 
 }

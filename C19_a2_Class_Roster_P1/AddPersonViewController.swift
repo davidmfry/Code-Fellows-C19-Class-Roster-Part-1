@@ -9,7 +9,8 @@
 import UIKit
 import CoreData
 
-class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate
+{
 
     // Entity Names
     let STUDENT_ENTITY = "Students"
@@ -41,12 +42,6 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePic
         self.profileImage.image = UIImage(named: "blank-carbon-han")
        
     }
-    
-    override func viewWillAppear(animated: Bool)
-    {
-    
-    }
-  
     
     override func didReceiveMemoryWarning()
     {
@@ -116,7 +111,7 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePic
         self.dismissViewControllerAnimated(true, completion: { () -> Void in})
     }
     
-    
+//MARK: IBActions
     @IBAction func imageViewPressed(sender: AnyObject)
     {
         self.presentCamera()
@@ -151,6 +146,7 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePic
         // Name of the entity in the Core Data db and tells the app to use the entity created in the DB
         let entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
         
+        // Creates new Person object to insert into the Core Data DB
         var newPerson = CoreDBModelPerson(entity: entity, insertIntoManagedObjectContext: context)
         newPerson.firstName = firstNameTextField.text
         newPerson.lastName  = lastNameTextField.text
@@ -161,7 +157,7 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePic
         context.save(nil)
     }
     
-    
+//MARK: Edit Entity Item
     func editItem(entityName: String, existingItem: NSManagedObject, keyForValueToChange:String, value:AnyObject)
     {
         // Reference to our app delegate
@@ -172,6 +168,8 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePic
         
         // Name of the entity in the Core Data db and tells the app to use the entity created in the DB
         let entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
+        
+        // Allows editing on the existing item in the Entoty
         existingItem.setValue(value, forKey: keyForValueToChange)
         
         var error: NSError?

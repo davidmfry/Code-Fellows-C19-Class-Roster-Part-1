@@ -144,9 +144,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // Student  Cell
         if indexPath.section == 0
         {
+            // Managed object from CoreData Entity Students
             var data = self.studentArray[indexPath.row] as NSManagedObject
-        
+            // Student Imagefile in binary data format and needs to be changed to a UIImage for use
             var studentImage = data.valueForKey(self.IMAGE_KEY) as NSData
+            
+            // Cell Config
             cell.textLabel.text = "\(data.valueForKey(self.FIRST_NAME_KEY)) \(data.valueForKey(self.LAST_NAME_KEY))"
             cell.detailTextLabel.text = data.valueForKey(self.STUDENT_ID_KEY) as String
             cell.imageView.image = UIImage(data: studentImage) as UIImage
@@ -157,8 +160,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // Teacher Cell
         else
         {
+            // Managed object from CoreData Entity Teachers
             var data = self.teacherArray[indexPath.row] as NSManagedObject
+            // Teacher Imagefile in binary data format and needs to be changed to a UIImage for use
             var teacherImage = data.valueForKey(self.IMAGE_KEY) as NSData
+            
+            // Cell Config
             cell.textLabel.text = "\(data.valueForKey(self.FIRST_NAME_KEY)) \(data.valueForKey(self.LAST_NAME_KEY))"
             cell.detailTextLabel.text = data.valueForKey(self.STUDENT_ID_KEY) as String
             cell.imageView.image = UIImage(data: teacherImage) as UIImage
@@ -171,7 +178,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     }
     
-    func tableView(tableView: UITableView!, canEditRowAtIndexPath indexPath: NSIndexPath!) -> Bool {
+    func tableView(tableView: UITableView!, canEditRowAtIndexPath indexPath: NSIndexPath!) -> Bool
+    {
+        // Allows editing for the table View cell
         return true
     }
     
@@ -180,25 +189,39 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let appDel: AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         let context: NSManagedObjectContext = appDel.managedObjectContext!
         
+        // Checks to see if the cell style is set to delete
         if editingStyle == UITableViewCellEditingStyle.Delete
         {
+            // Makes sure the tableView var is not empty
             if let tv = tableView
             {
+                // Student Section
                 if indexPath.section == 0
                 {
+                    // Gets the object to be deleted
                     context.deleteObject(self.studentArray[indexPath.row] as NSManagedObject)
                         
+                    // Removes the item from the array at the index path
                     self.studentArray.removeAtIndex(indexPath.row)
+                    
+                    // Deletes the row
                     tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
                 }
                 else
                 {
+                    // Gets the object to be deleted
                     context.deleteObject(self.teacherArray[indexPath.row] as NSManagedObject)
+                    
+                    // Removes the item from the array at the index path
+                    
                     self.teacherArray.removeAtIndex(indexPath.row)
+                    
+                    // Deletes the row
                     tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
                 }
                 
                 var error: NSError?
+                // Saves the Entity and if there is an error aborts the save
                 if !context.save(&error)
                 {
                     abort()
@@ -239,32 +262,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 detailViewController.image = selectedPerson.valueForKey(self.IMAGE_KEY) as? NSData
                 detailViewController.selectedPerson = selectedPerson
             }
-            
-            
         }
-        
-    
-        
     }
-    
-//    @IBAction func exitToRootViewController(segue: UIStoryboardSegue)
-//    {
-//        var sourceViewController = segue.sourceViewController as AddPersonViewController
-//        
-//        var newPerson = Person(studentId: sourceViewController.idNumberTextField.text, firstName: sourceViewController.firstNameTextField.text, lastName: sourceViewController.lastNameTextField.text, role: sourceViewController.roleTextField.text)
-//        newPerson.image = sourceViewController.profileImage.image
-//        
-//        if newPerson.role == "teacher"
-//        {
-//            self.teacherArray.append(newPerson)
-//        }
-//        else if newPerson.role == "student"
-//        {
-//            self.personArray.append(newPerson)
-//        }
-//        
-//        
-//    }
     
 //MARK: #Custom Methods
     func makePeople(rosterArray: NSArray, entityName:String)
