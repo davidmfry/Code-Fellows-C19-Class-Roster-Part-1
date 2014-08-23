@@ -124,7 +124,17 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePic
     
     @IBAction func finishedButtonPressed(sender: AnyObject)
     {
-        self.createPerson(self.STUDENT_ENTITY)
+       
+        // Saves the User Data into the CoreData DB
+        if self.roleTextField.text == "teacher"
+        {
+            self.createPerson(self.TEACHER_ENTITY)
+        }
+        if self.roleTextField.text == "student"
+        {
+            self.createPerson(self.STUDENT_ENTITY)
+        }
+        
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -146,7 +156,7 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePic
         newPerson.lastName  = lastNameTextField.text
         newPerson.studentID = idNumberTextField.text
         newPerson.role      = roleTextField.text
-        newPerson.image = UIImagePNGRepresentation(self.profileImage.image)
+        newPerson.image     = UIImagePNGRepresentation(self.profileImage.image)
         
         context.save(nil)
     }

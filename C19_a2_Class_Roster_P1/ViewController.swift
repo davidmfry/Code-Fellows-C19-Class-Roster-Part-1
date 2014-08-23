@@ -73,15 +73,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             self.makePeople(teacherRoster, entityName: self.TEACHER_ENTITY)
         }
         
-
-        
-        let getStudentList = NSFetchRequest(entityName: self.STUDENT_ENTITY)
-        let getTeacherList = NSFetchRequest(entityName: self.TEACHER_ENTITY)
-        
-        self.studentArray = context.executeFetchRequest(getStudentList, error: nil)
-        self.teacherArray = context.executeFetchRequest(getTeacherList, error: nil)
-        
-        println("THIS IS TEACHER ARRAY!!!!!    \(self.teacherArray[0])")
      
         
         
@@ -89,10 +80,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func viewWillAppear(animated: Bool)
     {
+        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let context: NSManagedObjectContext = appDel.managedObjectContext!
+        
         // Reloads the tabelView after it comes back from any other viewController
         
         //Sets the firstAppRun to 1 so it does not create the DB again after the app closes
         standardDefaults.setInteger(1, forKey: "firstAppRun")
+        let getStudentList = NSFetchRequest(entityName: self.STUDENT_ENTITY)
+        let getTeacherList = NSFetchRequest(entityName: self.TEACHER_ENTITY)
+        
+        self.studentArray = context.executeFetchRequest(getStudentList, error: nil)
+        self.teacherArray = context.executeFetchRequest(getTeacherList, error: nil)
         
         self.appTableView.reloadData()
     }
@@ -170,6 +169,44 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
         
 
+    }
+    
+    func tableView(tableView: UITableView!, canEditRowAtIndexPath indexPath: NSIndexPath!) -> Bool {
+        return true
+    }
+    
+    func tableView(tableView: UITableView!, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath!) {
+        
+        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let context: NSManagedObjectContext = appDel.managedObjectContext!
+        
+        if editingStyle == UITableViewCellEditingStyle.Delete
+        {
+            if let tv = tableView
+            {
+                if indexPath.section == 0
+                {
+                    context.deleteObject(self.studentArray[indexPath.row] as NSManagedObject)
+                        
+                    self.studentArray.removeAtIndex(indexPath.row)
+                    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+                }
+                else
+                {
+                    context.deleteObject(self.teacherArray[indexPath.row] as NSManagedObject)
+                    self.teacherArray.removeAtIndex(indexPath.row)
+                    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+                }
+                
+                var error: NSError?
+                if !context.save(&error)
+                {
+                    abort()
+                }
+            }
+            
+                
+        }
     }
 //MARK:  #Navagation Methods
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!)
