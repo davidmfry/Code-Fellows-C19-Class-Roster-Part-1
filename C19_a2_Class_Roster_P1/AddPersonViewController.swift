@@ -20,6 +20,7 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePic
     let FIRST_NAME_KEY = "firstName"
     let LAST_NAME_KEY = "lastName"
     let STUDENT_ID_KEY = "studentID"
+    let GITHUB_NAME_KEY = "gitHubUserName"
     let ROLE_KEY = "role"
     let IMAGE_KEY = "image"
     

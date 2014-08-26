@@ -20,15 +20,18 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     let FIRST_NAME_KEY = "firstName"
     let LAST_NAME_KEY = "lastName"
     let STUDENT_ID_KEY = "studentID"
+    let GITHUB_NAME_KEY = "gitHubUserName"
     let ROLE_KEY = "role"
     let IMAGE_KEY = "image"
     
     @IBOutlet var personImageView:      UIImageView!
     @IBOutlet var firstNameTextField:   UITextField!
     @IBOutlet var lastNameTextField:    UITextField!
+    @IBOutlet var gitHubUserNameTextField: UITextField!
     
     var firstName = ""
     var lastName = ""
+    var gitHubUserName = ""
     var image: NSData?
 
     var selectedPerson: NSManagedObject?
@@ -38,19 +41,21 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.firstNameTextField.delegate    = self
-        self.lastNameTextField.delegate     = self
-        
-        self.firstNameTextField.text        = self.firstName
-        self.lastNameTextField.text         = self.lastName
-        self.personImageView.image          = UIImage(data: self.image) as UIImage
+        self.firstNameTextField.delegate        = self
+        self.lastNameTextField.delegate         = self
+        self.gitHubUserNameTextField.delegate   = self
+        self.firstNameTextField.text            = self.firstName
+        self.lastNameTextField.text             = self.lastName
+        self.personImageView.image              = UIImage(data: self.image) as UIImage
         
         
     }
     
     override func viewWillAppear(animated: Bool)
     {
-            
+        
+        self.gitHubUserNameTextField.text = self.selectedPerson!.valueForKey(self.GITHUB_NAME_KEY) as String
+        
         if self.savedPic != nil
         {
             self.editItem(self.STUDENT_ENTITY, existingItem: self.selectedPerson!, keyForValueToChange: self.IMAGE_KEY, value: self.savedPic!)
@@ -68,7 +73,8 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
 //MARK: #IBActions
     @IBAction func tapedTheProfileImage(sender: AnyObject)
     {
-        self.presentCamera()
+        self.addAlertView("Alert", message: "Please add your gitHub username", alertStyle: UIAlertControllerStyle.Alert)
+        
     }
     
     @IBAction func pushedTakeAPicture(sender: AnyObject)
@@ -105,6 +111,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         
         self.selectedPerson!.setValue(self.firstNameTextField.text, forKey: self.FIRST_NAME_KEY)
         self.selectedPerson!.setValue(self.lastNameTextField.text, forKey: self.LAST_NAME_KEY)
+        self.selectedPerson!.setValue(self.gitHubUserNameTextField.text, forKey: self.GITHUB_NAME_KEY)
         context.save(nil)
     }
 //MARK: #Camera Methods
@@ -160,6 +167,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
+//MARK: CRUD Function
     func editItem(entityName: String, existingItem: NSManagedObject, keyForValueToChange:String, value:AnyObject)
     {
         // Reference to our app delegate
@@ -175,6 +183,56 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         var error: NSError?
         
         context.save(&error)
+        
+    }
+    
+//MARK: Alerts
+
+    func addTextField(textField: UITextField)
+    {
+        textField.placeholder = "GitHub Username:"
+        println("THIS IS THE ADDED TEXTFIELD IN ALERT:  \(textField.text)")
+        self.gitHubUserNameTextField = textField
+//        self.gitHubUserName = textField.text
+        
+    }
+    
+    func wordEntered(alert:UIAlertAction)
+    {
+        
+    }
+    
+    
+    
+    func addAlertView(title: String, message: String, alertStyle: UIAlertControllerStyle)
+    {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: alertStyle)
+        alert.addTextFieldWithConfigurationHandler { (textField) -> Void in
+            self.addTextField(textField)
+        }
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
+            var alertTextField = alert.textFields[0] as UITextField
+            
+            
+            // Reference to our app delegate
+        
+            let appDel: AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+            
+            
+            // Reference managed object context
+            
+            let context: NSManagedObjectContext = appDel.managedObjectContext!
+            
+            // Name of the entity in the Core Data db and tells the app to use the entity created in the DB
+            let entity = NSEntityDescription.entityForName(self.STUDENT_ENTITY, inManagedObjectContext: context)
+            
+            self.selectedPerson!.setValue(alertTextField.text, forKey: self.GITHUB_NAME_KEY)
+            context.save(nil)
+            
+            
+        }))
+        presentViewController(alert, animated: true, completion: nil)
         
     }
 

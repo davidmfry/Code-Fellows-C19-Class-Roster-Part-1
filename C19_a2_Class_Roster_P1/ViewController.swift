@@ -45,6 +45,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let FIRST_NAME_KEY = "firstName"
     let LAST_NAME_KEY = "lastName"
     let STUDENT_ID_KEY = "studentID"
+    let GITHUB_NAME_KEY = "gitHubUserName"
     let ROLE_KEY = "role"
     let IMAGE_KEY = "image"
     
@@ -249,6 +250,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 // Passes the person managed object by referance to the detailViewController
                 detailViewController.firstName = selectedPerson.valueForKey(self.FIRST_NAME_KEY) as String
                 detailViewController.lastName = selectedPerson.valueForKey(self.LAST_NAME_KEY) as String
+                detailViewController.gitHubUserName = selectedPerson.valueForKey(self.GITHUB_NAME_KEY) as String
+                println("Github USER NAME \(selectedPerson.valueForKey(self.GITHUB_NAME_KEY) as String)")
                 detailViewController.image = selectedPerson.valueForKey(self.IMAGE_KEY) as? NSData
                 detailViewController.selectedPerson = selectedPerson
             }
@@ -294,6 +297,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             newPerson.studentID = name["id"] as String
             newPerson.firstName = name["firstName"] as String
             newPerson.lastName = name["lastName"] as String
+            newPerson.gitHubUserName = "" as String
             newPerson.role = name["role"] as String
             
             // Adding the proper image to the student or teacher

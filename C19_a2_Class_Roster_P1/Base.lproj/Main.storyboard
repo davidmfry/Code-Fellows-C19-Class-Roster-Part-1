@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6205" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eHd-JF-tfS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6205" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eHd-JF-tfS">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6198"/>
         <capability name="Constraints with attributes relative to the layout margin" minToolsVersion="6.0"/>
@@ -311,21 +311,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N2Y-ap-3Ud">
-                                <rect key="frame" x="168" y="389" width="265" height="30"/>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="3h8-XM-JOB"/>
-                                    <constraint firstAttribute="width" constant="265" id="vjH-PJ-bDf"/>
-                                </constraints>
-                                <state key="normal" title="Take a picture">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="pushedTakeAPicture:" destination="qPi-hE-VNX" eventType="touchUpInside" id="PNu-wN-ZUO"/>
-                                </connections>
-                            </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PCt-CV-5nk">
                                 <rect key="frame" x="168" y="351" width="265" height="30"/>
                                 <constraints>
@@ -335,7 +320,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap the picture to change " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Otz-XA-xIB">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap the picture to add gitHub info" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Otz-XA-xIB">
                                 <rect key="frame" x="188" y="289" width="225" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -378,11 +363,35 @@
                                     <action selector="tapedTheProfileImage:" destination="qPi-hE-VNX" eventType="touchUpInside" id="Fhz-rU-hJm"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="github Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FAu-wP-YF9">
+                                <rect key="frame" x="168" y="389" width="265" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="265" id="P7L-YC-Jlu"/>
+                                    <constraint firstAttribute="height" constant="30" id="gTs-cd-Pb4"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N2Y-ap-3Ud">
+                                <rect key="frame" x="168" y="427" width="265" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="3h8-XM-JOB"/>
+                                    <constraint firstAttribute="width" constant="265" id="vjH-PJ-bDf"/>
+                                </constraints>
+                                <state key="normal" title="Take a picture">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pushedTakeAPicture:" destination="qPi-hE-VNX" eventType="touchUpInside" id="PNu-wN-ZUO"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Otz-XA-xIB" firstAttribute="top" secondItem="z35-RF-6tm" secondAttribute="bottom" constant="62" id="1c4-EI-Bu4"/>
-                            <constraint firstItem="N2Y-ap-3Ud" firstAttribute="top" secondItem="PCt-CV-5nk" secondAttribute="bottom" constant="8" id="1zD-Dd-0sL">
+                            <constraint firstItem="N2Y-ap-3Ud" firstAttribute="top" secondItem="PCt-CV-5nk" secondAttribute="bottom" constant="46" id="1zD-Dd-0sL">
                                 <variation key="heightClass=compact" constant="2"/>
                             </constraint>
                             <constraint firstItem="Otz-XA-xIB" firstAttribute="top" secondItem="Jvw-9o-Vji" secondAttribute="bottom" constant="1" id="3MR-aA-T7p">
@@ -433,6 +442,8 @@
                             <constraint firstItem="zWu-a0-fNx" firstAttribute="top" secondItem="Otz-XA-xIB" secondAttribute="bottom" constant="8" id="ic4-dh-hBv">
                                 <variation key="heightClass=compact-widthClass=compact" constant="8"/>
                             </constraint>
+                            <constraint firstItem="FAu-wP-YF9" firstAttribute="leading" secondItem="PCt-CV-5nk" secondAttribute="leading" id="j3j-gd-XGm"/>
+                            <constraint firstItem="FAu-wP-YF9" firstAttribute="top" secondItem="PCt-CV-5nk" secondAttribute="bottom" constant="8" id="kgD-GU-8Sf"/>
                             <constraint firstAttribute="centerY" secondItem="zWu-a0-fNx" secondAttribute="centerY" id="tQw-wP-WjO"/>
                             <constraint firstItem="PCt-CV-5nk" firstAttribute="centerX" secondItem="zWu-a0-fNx" secondAttribute="centerX" id="vux-vP-keT"/>
                             <constraint firstAttribute="centerX" secondItem="zWu-a0-fNx" secondAttribute="centerX" id="zEt-CS-O6f">
@@ -449,10 +460,10 @@
                                 <exclude reference="a84-QK-9Zz"/>
                                 <exclude reference="8FB-QM-wmp"/>
                                 <exclude reference="95L-Wg-fll"/>
-                                <exclude reference="tQw-wP-WjO"/>
                                 <exclude reference="1c4-EI-Bu4"/>
                                 <exclude reference="GMW-0U-Nhi"/>
                                 <exclude reference="Jva-m4-wGq"/>
+                                <exclude reference="tQw-wP-WjO"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
@@ -481,6 +492,7 @@
                     <navigationItem key="navigationItem" id="aKN-5T-bej"/>
                     <connections>
                         <outlet property="firstNameTextField" destination="zWu-a0-fNx" id="TPS-TL-Cxj"/>
+                        <outlet property="gitHubUserNameTextField" destination="FAu-wP-YF9" id="dsC-0R-Fxj"/>
                         <outlet property="lastNameTextField" destination="PCt-CV-5nk" id="FGg-pn-gya"/>
                         <outlet property="personImageView" destination="aIg-NW-d4I" id="FxA-RK-EFW"/>
                     </connections>
