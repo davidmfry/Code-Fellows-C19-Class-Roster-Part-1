@@ -17,6 +17,7 @@
 		ED5AB4841991224100D05880 /* C19_a2_Class_Roster_P1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AB4831991224100D05880 /* C19_a2_Class_Roster_P1Tests.swift */; };
 		ED5AB48E1991226700D05880 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AB48D1991226700D05880 /* Person.swift */; };
 		ED7F82CE1991980D00E6F125 /* roster.json in Resources */ = {isa = PBXBuildFile; fileRef = ED7F82CD1991980D00E6F125 /* roster.json */; };
+		ED8B43CC19A7993600B93ECE /* CoreDBModelPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8B43CB19A7993600B93ECE /* CoreDBModelPerson.swift */; };
 		EDA92572199D03D4009EBA9B /* teacherRoster.plist in Resources */ = {isa = PBXBuildFile; fileRef = EDA92571199D03D4009EBA9B /* teacherRoster.plist */; };
 		EDA92574199D60C5009EBA9B /* AddPersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA92573199D60C5009EBA9B /* AddPersonViewController.swift */; };
 /* End PBXBuildFile section */
@@ -46,6 +47,7 @@
 		ED5AB4831991224100D05880 /* C19_a2_Class_Roster_P1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C19_a2_Class_Roster_P1Tests.swift; sourceTree = "<group>"; };
 		ED5AB48D1991226700D05880 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Person.swift; path = ../Person.swift; sourceTree = "<group>"; };
 		ED7F82CD1991980D00E6F125 /* roster.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = roster.json; sourceTree = SOURCE_ROOT; };
+		ED8B43CB19A7993600B93ECE /* CoreDBModelPerson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDBModelPerson.swift; sourceTree = "<group>"; };
 		EDA92571199D03D4009EBA9B /* teacherRoster.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = teacherRoster.plist; sourceTree = "<group>"; };
 		EDA92573199D60C5009EBA9B /* AddPersonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPersonViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,11 +91,12 @@
 		ED5AB46A1991224000D05880 /* C19_a2_Class_Roster_P1 */ = {
 			isa = PBXGroup;
 			children = (
-				ED5AB48D1991226700D05880 /* Person.swift */,
 				ED5AB46D1991224100D05880 /* AppDelegate.swift */,
 				ED5AB4721991224100D05880 /* ViewController.swift */,
 				ED21E30E199AC1410092B1DB /* DetailViewController.swift */,
 				EDA92573199D60C5009EBA9B /* AddPersonViewController.swift */,
+				ED5AB48D1991226700D05880 /* Person.swift */,
+				ED8B43CB19A7993600B93ECE /* CoreDBModelPerson.swift */,
 				ED5AB4741991224100D05880 /* Main.storyboard */,
 				ED5AB4771991224100D05880 /* Images.xcassets */,
 				ED5AB46F1991224100D05880 /* C19_a2_Class_Roster_P1.xcdatamodeld */,
@@ -236,6 +239,7 @@
 				ED5AB46E1991224100D05880 /* AppDelegate.swift in Sources */,
 				ED21E30F199AC1410092B1DB /* DetailViewController.swift in Sources */,
 				ED5AB48E1991226700D05880 /* Person.swift in Sources */,
+				ED8B43CC19A7993600B93ECE /* CoreDBModelPerson.swift in Sources */,
 				ED5AB4711991224100D05880 /* C19_a2_Class_Roster_P1.xcdatamodeld in Sources */,
 				EDA92574199D60C5009EBA9B /* AddPersonViewController.swift in Sources */,
 			);
@@ -356,6 +360,7 @@
 				INFOPLIST_FILE = C19_a2_Class_Roster_P1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -367,6 +372,7 @@
 				INFOPLIST_FILE = C19_a2_Class_Roster_P1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

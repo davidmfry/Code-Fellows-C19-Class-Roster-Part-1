@@ -8,17 +8,32 @@
 
 import UIKit
 import MobileCoreServices
+import CoreData
 
 class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
-
+    // Entity Names
+    let STUDENT_ENTITY = "Students"
+    let TEACHER_ENTITY = "Teachers"
+    
+    // Entity Keys
+    let FIRST_NAME_KEY = "firstName"
+    let LAST_NAME_KEY = "lastName"
+    let STUDENT_ID_KEY = "studentID"
+    let ROLE_KEY = "role"
+    let IMAGE_KEY = "image"
+    
     @IBOutlet var personImageView:      UIImageView!
     @IBOutlet var firstNameTextField:   UITextField!
     @IBOutlet var lastNameTextField:    UITextField!
+    
+    var firstName = ""
+    var lastName = ""
+    var image: NSData?
 
-    var selectedPerson = Person?()
+    var selectedPerson: NSManagedObject?
 
-    var savedPic : UIImage?
+    var savedPic : NSData?
     
     override func viewDidLoad()
     {
@@ -26,20 +41,21 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         self.firstNameTextField.delegate    = self
         self.lastNameTextField.delegate     = self
         
-        self.firstNameTextField.text        = self.selectedPerson?.firstName
-        self.lastNameTextField.text         = self.selectedPerson?.lastName
-        self.personImageView.image          = self.selectedPerson?.image
+        self.firstNameTextField.text        = self.firstName
+        self.lastNameTextField.text         = self.lastName
+        self.personImageView.image          = UIImage(data: self.image) as UIImage
         
         
     }
     
     override func viewWillAppear(animated: Bool)
     {
+            
         if self.savedPic != nil
         {
-            self.personImageView.image = self.savedPic
-            self.selectedPerson?.image = self.savedPic
+            self.editItem(self.STUDENT_ENTITY, existingItem: self.selectedPerson!, keyForValueToChange: self.IMAGE_KEY, value: self.savedPic!)
         }
+        
     }
     
 
@@ -50,16 +66,6 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     }
     
 //MARK: #IBActions
-    @IBAction func firstNameTextFieldChange(sender: AnyObject)
-    {
-        self.selectedPerson?.firstName = self.firstNameTextField.text
-    }
-    
-    @IBAction func lastNameTextFieldChanged(sender: AnyObject)
-    {
-        self.selectedPerson?.lastName = self.lastNameTextField.text
-    }
-    
     @IBAction func tapedTheProfileImage(sender: AnyObject)
     {
         self.presentCamera()
@@ -82,18 +88,35 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         // Dissmiss the keyboard when the view is touched
         self.view.endEditing(true)
     }
-
     
+    func textFieldDidEndEditing(textField: UITextField!)
+    {
+        // Reference to our app delegate
+        
+        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        
+        
+        // Reference managed object context
+        
+        let context: NSManagedObjectContext = appDel.managedObjectContext!
+        
+        // Name of the entity in the Core Data db and tells the app to use the entity created in the DB
+        let entity = NSEntityDescription.entityForName(self.STUDENT_ENTITY, inManagedObjectContext: context)
+        
+        self.selectedPerson!.setValue(self.firstNameTextField.text, forKey: self.FIRST_NAME_KEY)
+        self.selectedPerson!.setValue(self.lastNameTextField.text, forKey: self.LAST_NAME_KEY)
+        context.save(nil)
+    }
 //MARK: #Camera Methods
     func presentCamera()
     {
         // Check for the camera device
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary)
         {
             println("YES")
             var cameraUI = UIImagePickerController()
             cameraUI.delegate = self
-            cameraUI.sourceType = UIImagePickerControllerSourceType.Camera
+            cameraUI.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
             
             // If true you can pinch and zoom to make a diffrent image
             cameraUI.allowsEditing = true
@@ -112,23 +135,47 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         
     }
     
-    func imagePickerController(picker: UIImagePickerController!, didFinishPickingMediaWithInfo info: NSDictionary!)
+    func imagePickerController(picker: UIImagePickerController!, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]!)
     {
         // Image var to save the user taken image
         var imageToSave:UIImage?
         
         
-        imageToSave = info.objectForKey(UIImagePickerControllerEditedImage) as? UIImage
+        imageToSave = info[UIImagePickerControllerEditedImage] as? UIImage
         
         // Saves the image
         UIImageWriteToSavedPhotosAlbum(imageToSave, nil, nil, nil)
-        self.savedPic = imageToSave
+        
+        // Shows new image on the UIImage view
+        self.personImageView.image = imageToSave
+        
+        self.savedPic = UIImageJPEGRepresentation(imageToSave, 1.0)
+        
         // Dismisss the camera View Controller
-        self.dismissViewControllerAnimated(true, completion: { () -> Void in})
+        self.dismissViewControllerAnimated(true, nil)
     }
     
-
+    func imagePickerControllerDidCancel(picker: UIImagePickerController!)
+    {
+        picker.dismissViewControllerAnimated(true, completion: nil)
+    }
     
+    func editItem(entityName: String, existingItem: NSManagedObject, keyForValueToChange:String, value:AnyObject)
+    {
+        // Reference to our app delegate
+        let appDel: AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        
+        // Reference managed object context
+        let context: NSManagedObjectContext = appDel.managedObjectContext!
+        
+        // Name of the entity in the Core Data db and tells the app to use the entity created in the DB
+        let entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
+        existingItem.setValue(value, forKey: keyForValueToChange)
 
+        var error: NSError?
+        
+        context.save(&error)
+        
+    }
 
 }
