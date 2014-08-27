@@ -32,6 +32,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     var firstName = ""
     var lastName = ""
     var gitHubUserName = ""
+    var jsonData: NSDictionary?
     var image: NSData?
 
     var selectedPerson: NSManagedObject?
@@ -185,6 +186,36 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         context.save(&error)
         
     }
+
+//MARK: API functions
+
+    func getJsonDataFromGitHub(username:String)
+    {
+        // This function gets Json data from the gitHub api using the given username
+        
+        // This holds the gitHub api url
+        let URL = NSURL(string: "https://api.github.com/users/\(username)")
+        println(URL)
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithURL(URL, completionHandler: { (data, response, error) -> Void in
+            if error != nil
+            {
+                println(error.localizedDescription)
+            }
+            
+            var err: NSError?
+            
+            var jsonResults = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &err) as NSDictionary
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.jsonData = jsonResults
+                println(jsonResults)
+                
+            })
+        })
+        task.resume()
+        
+    }
     
 //MARK: Alerts
 
@@ -193,14 +224,9 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         textField.placeholder = "GitHub Username:"
         println("THIS IS THE ADDED TEXTFIELD IN ALERT:  \(textField.text)")
         self.gitHubUserNameTextField = textField
-//        self.gitHubUserName = textField.text
         
     }
     
-    func wordEntered(alert:UIAlertAction)
-    {
-        
-    }
     
     
     
@@ -213,7 +239,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
             var alertTextField = alert.textFields[0] as UITextField
-            
+            var imageDownloadQueue = NSOperationQueue()
             
             // Reference to our app delegate
         
@@ -229,6 +255,10 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
             
             self.selectedPerson!.setValue(alertTextField.text, forKey: self.GITHUB_NAME_KEY)
             context.save(nil)
+            self.getJsonDataFromGitHub(alertTextField.text)
+            imageDownloadQueue.addOperationWithBlock({ () -> Void in
+                
+            })
             
             
         }))
