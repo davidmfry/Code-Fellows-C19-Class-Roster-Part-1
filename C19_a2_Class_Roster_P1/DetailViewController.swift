@@ -28,6 +28,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     @IBOutlet var firstNameTextField:   UITextField!
     @IBOutlet var lastNameTextField:    UITextField!
     @IBOutlet var gitHubUserNameTextField: UITextField!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     var firstName = ""
     var lastName = ""
@@ -38,6 +39,8 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     var selectedPerson: NSManagedObject?
 
     var savedPic : NSData?
+
+    var imageDownloadQueue = NSOperationQueue()
     
     override func viewDidLoad()
     {
@@ -47,7 +50,15 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         self.gitHubUserNameTextField.delegate   = self
         self.firstNameTextField.text            = self.firstName
         self.lastNameTextField.text             = self.lastName
-        self.personImageView.image              = UIImage(data: self.image) as UIImage
+        
+        if gitHubUserName == nil
+        {
+            self.personImageView.image              = UIImage(data: self.image) as UIImage
+        }
+        else
+        {
+            self.personImageView.image = UIImage(data: self.image)
+        }
         
         
     }
@@ -197,6 +208,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         let URL = NSURL(string: "https://api.github.com/users/\(username)")
         println(URL)
         let session = NSURLSession.sharedSession()
+        self.activityIndicator.startAnimating()
         let task = session.dataTaskWithURL(URL, completionHandler: { (data, response, error) -> Void in
             if error != nil
             {
@@ -206,10 +218,16 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
             var err: NSError?
             
             var jsonResults = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &err) as NSDictionary
+            var url = NSURL(string: jsonResults["avatar_url"] as String)
+            var imageData = NSData(contentsOfURL: url)
+            var image = UIImage(data: imageData)
             
             dispatch_async(dispatch_get_main_queue(), {
                 self.jsonData = jsonResults
+                self.personImageView.image = image
+                self.savedPic = imageData
                 println(jsonResults)
+                self.activityIndicator.stopAnimating()
                 
             })
         })
@@ -239,8 +257,6 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
             var alertTextField = alert.textFields[0] as UITextField
-            var imageDownloadQueue = NSOperationQueue()
-            
             // Reference to our app delegate
         
             let appDel: AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
@@ -255,11 +271,8 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
             
             self.selectedPerson!.setValue(alertTextField.text, forKey: self.GITHUB_NAME_KEY)
             context.save(nil)
-            self.getJsonDataFromGitHub(alertTextField.text)
-            imageDownloadQueue.addOperationWithBlock({ () -> Void in
-                
-            })
             
+            self.getJsonDataFromGitHub(alertTextField.text)
             
         }))
         presentViewController(alert, animated: true, completion: nil)

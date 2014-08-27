@@ -387,6 +387,10 @@
                                     <action selector="pushedTakeAPicture:" destination="qPi-hE-VNX" eventType="touchUpInside" id="PNu-wN-ZUO"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="U48-97-jwf">
+                                <rect key="frame" x="282" y="161" width="37" height="37"/>
+                                <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -426,6 +430,7 @@
                             <constraint firstItem="Jvw-9o-Vji" firstAttribute="trailing" secondItem="aIg-NW-d4I" secondAttribute="trailing" id="Hhm-Dk-WrM"/>
                             <constraint firstItem="Jvw-9o-Vji" firstAttribute="bottom" secondItem="aIg-NW-d4I" secondAttribute="bottom" id="JYh-fz-3fM"/>
                             <constraint firstItem="Otz-XA-xIB" firstAttribute="leading" secondItem="Jvw-9o-Vji" secondAttribute="trailing" constant="38" id="Jva-m4-wGq"/>
+                            <constraint firstItem="Jvw-9o-Vji" firstAttribute="leading" secondItem="U48-97-jwf" secondAttribute="trailing" constant="-131" id="LYZ-ej-0gx"/>
                             <constraint firstItem="zWu-a0-fNx" firstAttribute="centerX" secondItem="Otz-XA-xIB" secondAttribute="centerX" id="NfW-rK-jlo">
                                 <variation key="heightClass=compact" constant="1"/>
                                 <variation key="heightClass=compact-widthClass=compact" constant="5"/>
@@ -439,6 +444,7 @@
                             </constraint>
                             <constraint firstItem="Jvw-9o-Vji" firstAttribute="trailing" secondItem="aIg-NW-d4I" secondAttribute="trailing" id="a84-QK-9Zz"/>
                             <constraint firstItem="Jvw-9o-Vji" firstAttribute="top" secondItem="aIg-NW-d4I" secondAttribute="top" id="d08-RR-4Mq"/>
+                            <constraint firstItem="Jvw-9o-Vji" firstAttribute="top" secondItem="U48-97-jwf" secondAttribute="bottom" constant="-126" id="dhy-P0-mme"/>
                             <constraint firstItem="zWu-a0-fNx" firstAttribute="top" secondItem="Otz-XA-xIB" secondAttribute="bottom" constant="8" id="ic4-dh-hBv">
                                 <variation key="heightClass=compact-widthClass=compact" constant="8"/>
                             </constraint>
@@ -491,6 +497,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="aKN-5T-bej"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="U48-97-jwf" id="R1T-gi-bFM"/>
                         <outlet property="firstNameTextField" destination="zWu-a0-fNx" id="TPS-TL-Cxj"/>
                         <outlet property="gitHubUserNameTextField" destination="FAu-wP-YF9" id="dsC-0R-Fxj"/>
                         <outlet property="lastNameTextField" destination="PCt-CV-5nk" id="FGg-pn-gya"/>
