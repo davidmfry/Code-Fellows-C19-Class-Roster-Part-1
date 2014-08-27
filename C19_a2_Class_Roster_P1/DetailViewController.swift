@@ -12,53 +12,62 @@ import CoreData
 
 class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
-    // Entity Names
+//MARK: Entity Names
     let STUDENT_ENTITY = "Students"
     let TEACHER_ENTITY = "Teachers"
     
-    // Entity Keys
+//MARK: Entity Keys
     let FIRST_NAME_KEY = "firstName"
     let LAST_NAME_KEY = "lastName"
     let STUDENT_ID_KEY = "studentID"
     let GITHUB_NAME_KEY = "gitHubUserName"
     let ROLE_KEY = "role"
     let IMAGE_KEY = "image"
-    
+
+//MARK: IBOutles
     @IBOutlet var personImageView:      UIImageView!
     @IBOutlet var firstNameTextField:   UITextField!
     @IBOutlet var lastNameTextField:    UITextField!
     @IBOutlet var gitHubUserNameTextField: UITextField!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
-    
+
+//MARK: Variables from segue
     var firstName = ""
     var lastName = ""
+    var role = ""
     var gitHubUserName = ""
-    var jsonData: NSDictionary?
-    var image: NSData?
-
+    var jsonData : NSDictionary?
+    var image : NSData?
     var selectedPerson: NSManagedObject?
 
+//MARK: Picture variable
     var savedPic : NSData?
 
-    var imageDownloadQueue = NSOperationQueue()
+//MARK: GitHub API variables
+    var gitHubApiUrl = "https://api.github.com/users/"
+    var response200: Bool?
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        println(self.role)
+        //Load the delegates
         self.firstNameTextField.delegate        = self
         self.lastNameTextField.delegate         = self
         self.gitHubUserNameTextField.delegate   = self
         self.firstNameTextField.text            = self.firstName
         self.lastNameTextField.text             = self.lastName
         
-        if gitHubUserName == nil
-        {
-            self.personImageView.image              = UIImage(data: self.image) as UIImage
-        }
-        else
-        {
-            self.personImageView.image = UIImage(data: self.image)
-        }
+        // Checking for a github user so the view can render the right picture
+        self.personImageView.image = UIImage(data: self.image) as UIImage
+//        if gitHubUserName == nil
+//        {
+//            self.personImageView.image = UIImage(data: self.image) as UIImage
+//        }
+//        else
+//        {
+//            self.personImageView.image = UIImage(data: self.image)
+//        }
         
         
     }
@@ -66,33 +75,57 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     override func viewWillAppear(animated: Bool)
     {
         
+        // Refreshing the text field fro git hub username
         self.gitHubUserNameTextField.text = self.selectedPerson!.valueForKey(self.GITHUB_NAME_KEY) as String
         
+        // Saving the new picture in the CoreData database
         if self.savedPic != nil
         {
-            self.editItem(self.STUDENT_ENTITY, existingItem: self.selectedPerson!, keyForValueToChange: self.IMAGE_KEY, value: self.savedPic!)
+            if self.role == "student"
+            {
+                self.editItem(self.STUDENT_ENTITY, existingItem: self.selectedPerson!, keyForValueToChange: self.IMAGE_KEY, value: self.savedPic!)
+            }
+            else
+            {
+                self.editItem(self.TEACHER_ENTITY, existingItem: self.selectedPerson!, keyForValueToChange: self.IMAGE_KEY, value: self.savedPic!)
+            }
         }
         
     }
     
-
-    override func didReceiveMemoryWarning()
+    override func viewWillDisappear(animated: Bool)
     {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        // Saving the new picture in the CoreData database
+        if self.savedPic != nil
+        {
+            println(self.role)
+            if self.role == "student"
+            {
+                self.editItem(self.STUDENT_ENTITY, existingItem: self.selectedPerson!, keyForValueToChange: self.IMAGE_KEY, value: self.savedPic!)
+            }
+            else
+            {
+                self.editItem(self.TEACHER_ENTITY, existingItem: self.selectedPerson!, keyForValueToChange: self.IMAGE_KEY, value: self.savedPic!)
+            }
+        }
     }
+    
+
     
 //MARK: #IBActions
     @IBAction func tapedTheProfileImage(sender: AnyObject)
     {
-        self.addAlertView("Alert", message: "Please add your gitHub username", alertStyle: UIAlertControllerStyle.Alert)
+        // Launches an alert view then the profile image is tapped
+        self.addAlertView("Giting Picture", message: "Please add your gitHub username", alertStyle: UIAlertControllerStyle.Alert)
         
     }
     
     @IBAction func pushedTakeAPicture(sender: AnyObject)
     {
+        // Launches the camera view
         self.presentCamera()
     }
+    
 //MARK: #Keyboard Dismiss
     func textFieldShouldReturn(textField:UITextField!) -> Bool
     {
@@ -121,9 +154,28 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         // Name of the entity in the Core Data db and tells the app to use the entity created in the DB
         let entity = NSEntityDescription.entityForName(self.STUDENT_ENTITY, inManagedObjectContext: context)
         
-        self.selectedPerson!.setValue(self.firstNameTextField.text, forKey: self.FIRST_NAME_KEY)
-        self.selectedPerson!.setValue(self.lastNameTextField.text, forKey: self.LAST_NAME_KEY)
-        self.selectedPerson!.setValue(self.gitHubUserNameTextField.text, forKey: self.GITHUB_NAME_KEY)
+        if textField == self.firstNameTextField
+        {
+            self.selectedPerson!.setValue(self.firstNameTextField.text, forKey: self.FIRST_NAME_KEY)
+            
+        }
+        
+        if textField == self.lastNameTextField
+        {
+
+            self.selectedPerson!.setValue(self.lastNameTextField.text, forKey: self.LAST_NAME_KEY)
+        }
+        
+        if textField == self.gitHubUserNameTextField
+        {
+            // Checks and downloads an image if there github username is valid
+            var url = NSURL(string: "\(self.gitHubApiUrl)\(self.gitHubUserNameTextField.text)" )
+            self.getJsonDataFromGitHub(self.gitHubUserNameTextField.text)
+            
+            // Saves the text from the textfield into the CoreData Database
+            self.selectedPerson!.setValue(self.gitHubUserNameTextField.text, forKey: self.GITHUB_NAME_KEY)
+
+        }
         context.save(nil)
     }
 //MARK: #Camera Methods
@@ -206,41 +258,80 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         
         // This holds the gitHub api url
         let URL = NSURL(string: "https://api.github.com/users/\(username)")
-        println(URL)
+//TODO: Figure out how to get a response code before the task is created
+        
+        // Gets a session which give a convient way to download data from HTTP
         let session = NSURLSession.sharedSession()
+        
+        
         self.activityIndicator.startAnimating()
+        
+        // Creats the GET request from the give URL
         let task = session.dataTaskWithURL(URL, completionHandler: { (data, response, error) -> Void in
-            if error != nil
+            
+            
+            if response == nil
             {
-                println(error.localizedDescription)
-            }
-            
-            var err: NSError?
-            
-            var jsonResults = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &err) as NSDictionary
-            var url = NSURL(string: jsonResults["avatar_url"] as String)
-            var imageData = NSData(contentsOfURL: url)
-            var image = UIImage(data: imageData)
-            
-            dispatch_async(dispatch_get_main_queue(), {
-                self.jsonData = jsonResults
-                self.personImageView.image = image
-                self.savedPic = imageData
-                println(jsonResults)
                 self.activityIndicator.stopAnimating()
+                // Launches an Alert box for the user to try again
+                self.addAlertView("Page Not Found:", message: "Check your username and try again.", alertStyle: UIAlertControllerStyle.Alert)
+            }
+            else
+            {
+            
                 
-            })
+                let httpResponse = response as NSHTTPURLResponse
+                
+                // The server code 200 is good anything else is bad
+                let statusCode = httpResponse.statusCode as Int
+                println(statusCode)
+                
+                if error != nil
+                {
+                    println(error.localizedDescription)
+                }
+                
+                var err: NSError?
+                
+                if statusCode == 200
+                {
+                    // Puts the json data from the url into a variable
+                    var jsonResults = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &err) as NSDictionary
+                    var url = NSURL(string: jsonResults["avatar_url"] as String)
+                    var imageData = NSData(contentsOfURL: url)
+                    var image = UIImage(data: imageData)
+                    
+                    // When finisehd with getting the data puts anything that needs to be updated into the main queue
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.jsonData = jsonResults
+                        self.personImageView.image = image
+                        self.savedPic = imageData
+                        self.activityIndicator.stopAnimating()
+                        
+                    })
+                }
+                
+                else
+                {
+                    self.activityIndicator.stopAnimating()
+                    // Launches an Alert box for the user to try again
+                    self.addAlertView("Page Not Found:", message: "Check your username and try again.", alertStyle: UIAlertControllerStyle.Alert)
+                    
+                }
+            }
         })
+        // Resumes the Task if its suspened
         task.resume()
         
     }
+    
     
 //MARK: Alerts
 
     func addTextField(textField: UITextField)
     {
+        // Adds a text field to the alert box
         textField.placeholder = "GitHub Username:"
-        println("THIS IS THE ADDED TEXTFIELD IN ALERT:  \(textField.text)")
         self.gitHubUserNameTextField = textField
         
     }
@@ -250,29 +341,49 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     
     func addAlertView(title: String, message: String, alertStyle: UIAlertControllerStyle)
     {
+       // Creates a UIAlertController
         let alert = UIAlertController(title: title, message: message, preferredStyle: alertStyle)
+        
+        // Adds the text field to the alert
         alert.addTextFieldWithConfigurationHandler { (textField) -> Void in
             self.addTextField(textField)
         }
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
+        
+        // Adds cancele button
+        alert.addAction(UIAlertAction(title: "Cancele", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
+            self.activityIndicator.stopAnimating()
+        }))
+        
+        // Add an ok button
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
             var alertTextField = alert.textFields[0] as UITextField
+
             // Reference to our app delegate
-        
             let appDel: AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
             
-            
             // Reference managed object context
-            
             let context: NSManagedObjectContext = appDel.managedObjectContext!
             
             // Name of the entity in the Core Data db and tells the app to use the entity created in the DB
             let entity = NSEntityDescription.entityForName(self.STUDENT_ENTITY, inManagedObjectContext: context)
             
-            self.selectedPerson!.setValue(alertTextField.text, forKey: self.GITHUB_NAME_KEY)
-            context.save(nil)
-            
+            // Gets the correct Json data from the given username
             self.getJsonDataFromGitHub(alertTextField.text)
+            
+            // Check for student or teacher roles to save in the appropriate CoreData enties
+            if self.role == "student"
+            {
+                self.editItem(self.STUDENT_ENTITY, existingItem: self.selectedPerson!, keyForValueToChange: self.GITHUB_NAME_KEY, value: alertTextField.text)
+            }
+            
+            else
+            {
+                self.editItem(self.STUDENT_ENTITY, existingItem: self.selectedPerson!, keyForValueToChange: self.GITHUB_NAME_KEY, value: alertTextField.text)
+            }
+            
+            context.save(nil)
+       
+            
             
         }))
         presentViewController(alert, animated: true, completion: nil)

@@ -152,7 +152,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             // Cell Config
             cell.textLabel.text = "\(data.valueForKey(self.FIRST_NAME_KEY)) \(data.valueForKey(self.LAST_NAME_KEY))"
-            cell.detailTextLabel.text = data.valueForKey(self.STUDENT_ID_KEY) as String
+            cell.detailTextLabel.text = "Github Username: \(data.valueForKey(self.GITHUB_NAME_KEY))"
             cell.imageView.image = UIImage(data: studentImage) as UIImage
             
             return cell
@@ -168,7 +168,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             // Cell Config
             cell.textLabel.text = "\(data.valueForKey(self.FIRST_NAME_KEY)) \(data.valueForKey(self.LAST_NAME_KEY))"
-            cell.detailTextLabel.text = data.valueForKey(self.STUDENT_ID_KEY) as String
+            cell.detailTextLabel.text = "Github Username: \(data.valueForKey(self.GITHUB_NAME_KEY))"
             cell.imageView.image = UIImage(data: teacherImage) as UIImage
             return cell
         }
@@ -250,6 +250,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 // Passes the person managed object by referance to the detailViewController
                 detailViewController.firstName = selectedPerson.valueForKey(self.FIRST_NAME_KEY) as String
                 detailViewController.lastName = selectedPerson.valueForKey(self.LAST_NAME_KEY) as String
+                detailViewController.role = selectedPerson.valueForKey(self.ROLE_KEY) as String
                 detailViewController.gitHubUserName = selectedPerson.valueForKey(self.GITHUB_NAME_KEY) as String
                 println("Github USER NAME \(selectedPerson.valueForKey(self.GITHUB_NAME_KEY) as String)")
                 detailViewController.image = selectedPerson.valueForKey(self.IMAGE_KEY) as? NSData
@@ -262,6 +263,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 // Passes the person managed object by referance to the detailViewController
                 detailViewController.firstName = selectedPerson.valueForKey(self.FIRST_NAME_KEY) as String
                 detailViewController.lastName = selectedPerson.valueForKey(self.LAST_NAME_KEY) as String
+                detailViewController.role = selectedPerson.valueForKey(self.ROLE_KEY) as String
                 detailViewController.image = selectedPerson.valueForKey(self.IMAGE_KEY) as? NSData
                 detailViewController.selectedPerson = selectedPerson
             }
