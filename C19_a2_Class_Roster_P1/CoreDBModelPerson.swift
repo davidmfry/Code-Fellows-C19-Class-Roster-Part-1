@@ -14,12 +14,13 @@ class CoreDBModelPerson: NSManagedObject
 {
     // properties feedding the atributes in our entity
     // must match the entity atributes
-    
+
     @NSManaged var studentID: String
     @NSManaged var firstName: String
     @NSManaged var lastName: String
     @NSManaged var gitHubUserName: String
     @NSManaged var role: String
     @NSManaged var image: NSData
+    
     
 }

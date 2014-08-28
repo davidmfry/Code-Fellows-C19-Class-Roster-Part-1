@@ -251,7 +251,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 detailViewController.firstName = selectedPerson.valueForKey(self.FIRST_NAME_KEY) as String
                 detailViewController.lastName = selectedPerson.valueForKey(self.LAST_NAME_KEY) as String
                 detailViewController.role = selectedPerson.valueForKey(self.ROLE_KEY) as String
-                detailViewController.gitHubUserName = selectedPerson.valueForKey(self.GITHUB_NAME_KEY) as String
+                detailViewController.gitHubUserName = selectedPerson.valueForKey(self.GITHUB_NAME_KEY) as? String
                 println("Github USER NAME \(selectedPerson.valueForKey(self.GITHUB_NAME_KEY) as String)")
                 detailViewController.image = selectedPerson.valueForKey(self.IMAGE_KEY) as? NSData
                 detailViewController.selectedPerson = selectedPerson

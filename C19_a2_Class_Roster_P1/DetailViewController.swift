@@ -35,7 +35,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     var firstName = ""
     var lastName = ""
     var role = ""
-    var gitHubUserName = ""
+    var gitHubUserName: String?
     var jsonData : NSDictionary?
     var image : NSData?
     var selectedPerson: NSManagedObject?
@@ -45,7 +45,6 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
 
 //MARK: GitHub API variables
     var gitHubApiUrl = "https://api.github.com/users/"
-    var response200: Bool?
     
     override func viewDidLoad()
     {
@@ -60,14 +59,6 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         
         // Checking for a github user so the view can render the right picture
         self.personImageView.image = UIImage(data: self.image) as UIImage
-//        if gitHubUserName == nil
-//        {
-//            self.personImageView.image = UIImage(data: self.image) as UIImage
-//        }
-//        else
-//        {
-//            self.personImageView.image = UIImage(data: self.image)
-//        }
         
         
     }
@@ -169,7 +160,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         if textField == self.gitHubUserNameTextField
         {
             // Checks and downloads an image if there github username is valid
-            var url = NSURL(string: "\(self.gitHubApiUrl)\(self.gitHubUserNameTextField.text)" )
+            var url = NSURL(string: "\(self.gitHubApiUrl)\(self.gitHubUserNameTextField.text)")
             self.getJsonDataFromGitHub(self.gitHubUserNameTextField.text)
             
             // Saves the text from the textfield into the CoreData Database
@@ -332,7 +323,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     {
         // Adds a text field to the alert box
         textField.placeholder = "GitHub Username:"
-        self.gitHubUserNameTextField = textField
+//        self.gitHubUserNameTextField = textField
         
     }
     
@@ -356,6 +347,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         
         // Add an ok button
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
+            
             var alertTextField = alert.textFields[0] as UITextField
 
             // Reference to our app delegate
@@ -373,12 +365,25 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
             // Check for student or teacher roles to save in the appropriate CoreData enties
             if self.role == "student"
             {
+
                 self.editItem(self.STUDENT_ENTITY, existingItem: self.selectedPerson!, keyForValueToChange: self.GITHUB_NAME_KEY, value: alertTextField.text)
+                self.gitHubUserName = alertTextField.text
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    self.gitHubUserNameTextField.text = self.gitHubUserName
+                    self.gitHubUserNameTextField.setNeedsLayout()
+                })
+
+
             }
             
             else
             {
                 self.editItem(self.STUDENT_ENTITY, existingItem: self.selectedPerson!, keyForValueToChange: self.GITHUB_NAME_KEY, value: alertTextField.text)
+                self.gitHubUserName = alertTextField.text
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    self.gitHubUserNameTextField.text = alertTextField.text
+                    self.gitHubUserNameTextField.setNeedsDisplay()
+                })
             }
             
             context.save(nil)
