@@ -64,8 +64,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let context: NSManagedObjectContext = appDel.managedObjectContext!
     
         // student and teacher roster is the plist variable wich can be opperated on.  It's an NSArray
-        let studentRoster = NSArray(contentsOfFile: self.studentPlistPath)
-        let teacherRoster = NSArray(contentsOfFile: self.teacherPlistPath)
+        let studentRoster = NSArray(contentsOfFile: self.studentPlistPath!)
+        let teacherRoster = NSArray(contentsOfFile: self.teacherPlistPath!)
         
         if firstAppRun == 0
         {

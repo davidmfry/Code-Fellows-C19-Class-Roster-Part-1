@@ -24,6 +24,7 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePic
     let ROLE_KEY = "role"
     let IMAGE_KEY = "image"
     
+
     
     @IBOutlet var firstNameTextField: UITextField!
     @IBOutlet var lastNameTextField: UITextField!
@@ -33,6 +34,11 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePic
     
     var savedPic: NSData?
     
+    var viewWidth: CGFloat?
+    var viewHeight: CGFloat?
+    var viewX: CGFloat?
+    var viewY: CGFloat?
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -41,6 +47,12 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePic
         self.idNumberTextField.delegate = self
         self.roleTextField.delegate = self
         self.profileImage.image = UIImage(named: "blank-carbon-han")
+        
+        self.viewWidth = self.view.frame.width
+        self.viewHeight = self.view.frame.height
+        self.viewX = self.view.frame.origin.x
+        self.viewY = self.view.frame.origin.y
+        
        
     }
     
@@ -62,6 +74,32 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePic
     {
         // Dissmiss the keyboard when the view is touched
         self.view.endEditing(true)
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField!)
+    {
+        // Moves the view out of the way for the text fields
+        var textFieldPadding: CGFloat = 100.0
+        var currentWidth = self.view.bounds.width
+        var currentHeight = self.view.bounds.height
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            var newY = self.view.bounds.origin.y + textField.frame.origin.y - textFieldPadding
+            var currentX = self.view.bounds.origin.x
+            println(newY)
+            self.view.bounds = CGRect(x: currentX, y: newY, width: currentWidth, height: currentHeight)
+        })
+        
+        
+        
+    }
+    
+    
+    func textFieldDidEndEditing(textField: UITextField!)
+    {
+  
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.view.bounds = CGRect(x: self.viewX!, y: self.viewY!, width: self.viewWidth!, height: self.viewHeight!)
+        })
     }
     
 //MARK: #Camera Methods

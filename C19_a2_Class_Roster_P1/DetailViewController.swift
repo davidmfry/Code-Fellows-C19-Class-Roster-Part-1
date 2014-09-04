@@ -42,6 +42,11 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
 
 //MARK: Picture variable
     var savedPic : NSData?
+    
+    var viewWidth: CGFloat?
+    var viewHeight: CGFloat?
+    var viewX: CGFloat?
+    var viewY: CGFloat?
 
 //MARK: GitHub API variables
     var gitHubApiUrl = "https://api.github.com/users/"
@@ -59,6 +64,11 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         
         // Checking for a github user so the view can render the right picture
         self.personImageView.image = UIImage(data: self.image) as UIImage
+        
+        self.viewWidth = self.view.frame.width
+        self.viewHeight = self.view.frame.height
+        self.viewX = self.view.frame.origin.x
+        self.viewY = self.view.frame.origin.y
         
         
     }
@@ -131,6 +141,19 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         self.view.endEditing(true)
     }
     
+    func textFieldDidBeginEditing(textField: UITextField!)
+    {
+        // Moves the view out of the way for the text fields
+        var textFieldPadding: CGFloat = 200.0
+        var currentWidth = self.view.bounds.width
+        var currentHeight = self.view.bounds.height
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            var newY = self.view.bounds.origin.y + textField.frame.origin.y - textFieldPadding
+            var currentX = self.view.bounds.origin.x
+            println(newY)
+            self.view.bounds = CGRect(x: currentX, y: newY, width: currentWidth, height: currentHeight)
+        })
+    }
     func textFieldDidEndEditing(textField: UITextField!)
     {
         // Reference to our app delegate
@@ -168,6 +191,10 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
 
         }
         context.save(nil)
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.view.bounds = CGRect(x: self.viewX!, y: self.viewY!, width: self.viewWidth!, height: self.viewHeight!)
+        })
     }
 //MARK: #Camera Methods
     func presentCamera()

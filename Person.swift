@@ -10,7 +10,7 @@
 import UIKit
 import Foundation
 
-class Person: NSObject, NSCoding
+class Person: NSObject
 {
     var studentId: String
     var firstName: String
@@ -52,7 +52,7 @@ class Person: NSObject, NSCoding
         aCoder.encodeObject(self.lastName, forKey:"lastName")
         aCoder.encodeObject(self.studentId, forKey:"studentId")
         aCoder.encodeObject(self.role, forKey:"role")
-        aCoder.encodeObject(self.image, forKey:"image")
+        aCoder.encodeObject(self.image!, forKey:"image")
         
         
     }
