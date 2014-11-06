@@ -70,8 +70,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if firstAppRun == 0
         {
             // Make people data model
-            self.makePeople(studentRoster, entityName: self.STUDENT_ENTITY)
-            self.makePeople(teacherRoster, entityName: self.TEACHER_ENTITY)
+            self.makePeople(studentRoster!, entityName: self.STUDENT_ENTITY)
+            self.makePeople(teacherRoster!, entityName: self.TEACHER_ENTITY)
         }
         
      
@@ -91,8 +91,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let getStudentList = NSFetchRequest(entityName: self.STUDENT_ENTITY)
         let getTeacherList = NSFetchRequest(entityName: self.TEACHER_ENTITY)
         
-        self.studentArray = context.executeFetchRequest(getStudentList, error: nil)
-        self.teacherArray = context.executeFetchRequest(getTeacherList, error: nil)
+        self.studentArray = context.executeFetchRequest(getStudentList, error: nil)!
+        self.teacherArray = context.executeFetchRequest(getTeacherList, error: nil)!
         
         self.appTableView.reloadData()
     }
@@ -152,8 +152,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             // Cell Config
             cell.textLabel.text = "\(data.valueForKey(self.FIRST_NAME_KEY)) \(data.valueForKey(self.LAST_NAME_KEY))"
-            cell.detailTextLabel.text = "Github Username: \(data.valueForKey(self.GITHUB_NAME_KEY))"
-            cell.imageView.image = UIImage(data: studentImage) as UIImage
+            cell.detailTextLabel?.text = "Github Username: \(data.valueForKey(self.GITHUB_NAME_KEY))"
+            cell.imageView.image = UIImage(data: studentImage)!
             
             return cell
         }
@@ -168,8 +168,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             // Cell Config
             cell.textLabel.text = "\(data.valueForKey(self.FIRST_NAME_KEY)) \(data.valueForKey(self.LAST_NAME_KEY))"
-            cell.detailTextLabel.text = "Github Username: \(data.valueForKey(self.GITHUB_NAME_KEY))"
-            cell.imageView.image = UIImage(data: teacherImage) as UIImage
+            cell.detailTextLabel?.text = "Github Username: \(data.valueForKey(self.GITHUB_NAME_KEY))"
+            cell.imageView.image = UIImage(data: teacherImage)!
             return cell
         }
         
@@ -233,20 +233,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
 //MARK:  #Navagation Methods
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!)
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!)
     {
         if segue.identifier == "segueToDetailView"
         {
             var detailViewController = segue.destinationViewController as DetailViewController
-            var personIndex = appTableView.indexPathForSelectedRow().row
+            var personIndex = self.appTableView.indexPathForSelectedRow()?.row
             var selectedPerson: NSManagedObject
             
             // Checks to see what type of person objects is going to passed in the segue.  Its
             // Either a student or teacher person object
             
-            if appTableView.indexPathForSelectedRow().section == 0
+            if self.appTableView.indexPathForSelectedRow()?.row == 0
             {
-                selectedPerson = self.studentArray[personIndex] as NSManagedObject
+                selectedPerson = self.studentArray[personIndex!] as NSManagedObject
                 // Passes the person managed object by referance to the detailViewController
                 detailViewController.firstName = selectedPerson.valueForKey(self.FIRST_NAME_KEY) as String
                 detailViewController.lastName = selectedPerson.valueForKey(self.LAST_NAME_KEY) as String
@@ -259,7 +259,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             else
             {
-                selectedPerson = self.teacherArray[personIndex] as NSManagedObject
+                selectedPerson = self.teacherArray[personIndex!] as NSManagedObject
                 // Passes the person managed object by referance to the detailViewController
                 detailViewController.firstName = selectedPerson.valueForKey(self.FIRST_NAME_KEY) as String
                 detailViewController.lastName = selectedPerson.valueForKey(self.LAST_NAME_KEY) as String
@@ -293,7 +293,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         for name in rosterArray
         {
             // Create instance of CoreDBModelPerson data model and initialize
-            var newPerson = CoreDBModelPerson(entity: entity, insertIntoManagedObjectContext: context)
+            var newPerson = CoreDBModelPerson(entity: entity!, insertIntoManagedObjectContext: context)
             
             // Mapping the properties from the plist
             newPerson.studentID = name["id"] as String

@@ -42,7 +42,6 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
 
 //MARK: Picture variable
     var savedPic : NSData?
-    
     var viewWidth: CGFloat?
     var viewHeight: CGFloat?
     var viewX: CGFloat?
@@ -63,7 +62,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         self.lastNameTextField.text             = self.lastName
         
         // Checking for a github user so the view can render the right picture
-        self.personImageView.image = UIImage(data: self.image) as UIImage
+        self.personImageView.image = UIImage(data: self.image!)
         
         self.viewWidth = self.view.frame.width
         self.viewHeight = self.view.frame.height
@@ -135,7 +134,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         return true
     }
     
-    override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!)
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent)
     {
         // Dissmiss the keyboard when the view is touched
         self.view.endEditing(true)
@@ -144,7 +143,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     func textFieldDidBeginEditing(textField: UITextField!)
     {
         // Moves the view out of the way for the text fields
-        var textFieldPadding: CGFloat = 200.0
+        var textFieldPadding: CGFloat = 150.0
         var currentWidth = self.view.bounds.width
         var currentHeight = self.view.bounds.height
         UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -168,6 +167,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         // Name of the entity in the Core Data db and tells the app to use the entity created in the DB
         let entity = NSEntityDescription.entityForName(self.STUDENT_ENTITY, inManagedObjectContext: context)
         
+
         if textField == self.firstNameTextField
         {
             self.selectedPerson!.setValue(self.firstNameTextField.text, forKey: self.FIRST_NAME_KEY)
@@ -285,7 +285,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         self.activityIndicator.startAnimating()
         
         // Creats the GET request from the give URL
-        let task = session.dataTaskWithURL(URL, completionHandler: { (data, response, error) -> Void in
+        let task = session.dataTaskWithURL(URL!, completionHandler: { (data, response, error) -> Void in
             
             
             if response == nil
@@ -316,8 +316,8 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
                     // Puts the json data from the url into a variable
                     var jsonResults = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &err) as NSDictionary
                     var url = NSURL(string: jsonResults["avatar_url"] as String)
-                    var imageData = NSData(contentsOfURL: url)
-                    var image = UIImage(data: imageData)
+                    var imageData = NSData(contentsOfURL: url!)
+                    var image = UIImage(data: imageData!)
                     
                     // When finisehd with getting the data puts anything that needs to be updated into the main queue
                     dispatch_async(dispatch_get_main_queue(), {

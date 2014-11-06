@@ -186,7 +186,7 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePic
         let entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context)
         
         // Creates new Person object to insert into the Core Data DB
-        var newPerson = CoreDBModelPerson(entity: entity, insertIntoManagedObjectContext: context)
+        var newPerson = CoreDBModelPerson(entity: entity!, insertIntoManagedObjectContext: context)
         newPerson.firstName         = firstNameTextField.text
         newPerson.lastName          = lastNameTextField.text
         newPerson.studentID         = idNumberTextField.text
