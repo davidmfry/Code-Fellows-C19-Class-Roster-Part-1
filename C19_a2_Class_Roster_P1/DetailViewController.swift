@@ -115,7 +115,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
 //MARK: #IBActions
     @IBAction func tapedTheProfileImage(sender: AnyObject)
     {
-        // Launches an alert view then the profile image is tapped
+        // Launches an alert view when the profile image is tapped
         self.addAlertView("Giting Picture", message: "Please add your gitHub username", alertStyle: UIAlertControllerStyle.Alert)
         
     }
@@ -333,7 +333,8 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
                 {
                     self.activityIndicator.stopAnimating()
                     // Launches an Alert box for the user to try again
-                    self.addAlertView("Page Not Found:", message: "Check your username and try again.", alertStyle: UIAlertControllerStyle.Alert)
+                    self.addAlertView("Page not Found:", message: "Check your username and try again", alertStyle: .Alert)
+                    
                     
                 }
             }
@@ -375,7 +376,8 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         // Add an ok button
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
             
-            var alertTextField = alert.textFields[0] as UITextField
+//            var alertTextField:UITextField = alert.textFields[0] as UITextField
+
 
             // Reference to our app delegate
             let appDel: AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
@@ -387,14 +389,14 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
             let entity = NSEntityDescription.entityForName(self.STUDENT_ENTITY, inManagedObjectContext: context)
             
             // Gets the correct Json data from the given username
-            self.getJsonDataFromGitHub(alertTextField.text)
+//            self.getJsonDataFromGitHub(alertTextField.text)
             
             // Check for student or teacher roles to save in the appropriate CoreData enties
             if self.role == "student"
             {
 
-                self.editItem(self.STUDENT_ENTITY, existingItem: self.selectedPerson!, keyForValueToChange: self.GITHUB_NAME_KEY, value: alertTextField.text)
-                self.gitHubUserName = alertTextField.text
+//                self.editItem(self.STUDENT_ENTITY, existingItem: self.selectedPerson!, keyForValueToChange: self.GITHUB_NAME_KEY, value: alertTextField.text)
+//                self.gitHubUserName = alertTextField.text
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     self.gitHubUserNameTextField.text = self.gitHubUserName
                     self.gitHubUserNameTextField.setNeedsLayout()
@@ -405,10 +407,10 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
             
             else
             {
-                self.editItem(self.STUDENT_ENTITY, existingItem: self.selectedPerson!, keyForValueToChange: self.GITHUB_NAME_KEY, value: alertTextField.text)
-                self.gitHubUserName = alertTextField.text
+//                self.editItem(self.STUDENT_ENTITY, existingItem: self.selectedPerson!, keyForValueToChange: self.GITHUB_NAME_KEY, value: alertTextField.text)
+//                self.gitHubUserName = alertTextField.text
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                    self.gitHubUserNameTextField.text = alertTextField.text
+//                    self.gitHubUserNameTextField.text = alertTextField.text
                     self.gitHubUserNameTextField.setNeedsDisplay()
                 })
             }

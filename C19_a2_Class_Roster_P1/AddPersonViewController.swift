@@ -70,7 +70,7 @@ class AddPersonViewController: UIViewController, UITextFieldDelegate, UIImagePic
         return true
     }
     
-    override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!)
+    override func touchesBegan(touches: NSSet, withEvent event: (UIEvent!))
     {
         // Dissmiss the keyboard when the view is touched
         self.view.endEditing(true)

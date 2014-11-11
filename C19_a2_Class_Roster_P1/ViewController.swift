@@ -103,7 +103,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return numberOfSection
     }
     
-    func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         // Student section
         if section == 0
@@ -130,9 +130,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
-    
-    
-    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell!
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         var cellIdentifier = "myCell"                   // Name for the cell in the table view
         
@@ -157,8 +155,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             return cell
         }
-        
-        // Teacher Cell
+            
+            // Teacher Cell
         else
         {
             // Managed object from CoreData Entity Teachers
@@ -173,11 +171,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             return cell
         }
         
-        
-
-        
-
+ 
     }
+    
+    
     
     func tableView(tableView: UITableView!, canEditRowAtIndexPath indexPath: NSIndexPath!) -> Bool
     {
