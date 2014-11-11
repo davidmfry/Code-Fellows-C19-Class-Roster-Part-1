@@ -149,8 +149,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             var studentImage = data.valueForKey(self.IMAGE_KEY) as NSData
             
             // Cell Config
-            cell.textLabel.text = "\(data.valueForKey(self.FIRST_NAME_KEY)) \(data.valueForKey(self.LAST_NAME_KEY))"
-            cell.detailTextLabel?.text = "Github Username: \(data.valueForKey(self.GITHUB_NAME_KEY))"
+            cell.textLabel.text = "\(data.valueForKey(self.FIRST_NAME_KEY)!) \(data.valueForKey(self.LAST_NAME_KEY)!)"
+            cell.detailTextLabel?.text = "Github Username: \(data.valueForKey(self.GITHUB_NAME_KEY)!)"
             cell.imageView.image = UIImage(data: studentImage)!
             
             return cell

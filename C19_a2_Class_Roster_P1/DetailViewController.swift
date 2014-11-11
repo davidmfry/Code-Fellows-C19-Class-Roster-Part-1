@@ -376,7 +376,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         // Add an ok button
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
             
-//            var alertTextField:UITextField = alert.textFields[0] as UITextField
+            var alertText = alert.title
 
 
             // Reference to our app delegate
@@ -389,14 +389,14 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
             let entity = NSEntityDescription.entityForName(self.STUDENT_ENTITY, inManagedObjectContext: context)
             
             // Gets the correct Json data from the given username
-//            self.getJsonDataFromGitHub(alertTextField.text)
+            self.getJsonDataFromGitHub(alertText!)
             
             // Check for student or teacher roles to save in the appropriate CoreData enties
             if self.role == "student"
             {
 
-//                self.editItem(self.STUDENT_ENTITY, existingItem: self.selectedPerson!, keyForValueToChange: self.GITHUB_NAME_KEY, value: alertTextField.text)
-//                self.gitHubUserName = alertTextField.text
+                self.editItem(self.STUDENT_ENTITY, existingItem: self.selectedPerson!, keyForValueToChange: self.GITHUB_NAME_KEY, value: alertText!)
+                self.gitHubUserName = alertText!
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     self.gitHubUserNameTextField.text = self.gitHubUserName
                     self.gitHubUserNameTextField.setNeedsLayout()
@@ -407,10 +407,10 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UIImagePicker
             
             else
             {
-//                self.editItem(self.STUDENT_ENTITY, existingItem: self.selectedPerson!, keyForValueToChange: self.GITHUB_NAME_KEY, value: alertTextField.text)
-//                self.gitHubUserName = alertTextField.text
+                self.editItem(self.STUDENT_ENTITY, existingItem: self.selectedPerson!, keyForValueToChange: self.GITHUB_NAME_KEY, value: alertText!)
+                self.gitHubUserName = alertText!
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-//                    self.gitHubUserNameTextField.text = alertTextField.text
+                    self.gitHubUserNameTextField.text = alertText!
                     self.gitHubUserNameTextField.setNeedsDisplay()
                 })
             }
